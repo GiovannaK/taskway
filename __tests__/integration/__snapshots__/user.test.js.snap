@@ -2,10 +2,15 @@
 
 exports[`Register Should register user 1`] = `
 Object {
-  "data": null,
-  "errors": Array [
-    [GraphQLError: Bad Input],
-  ],
+  "data": Object {
+    "userRegister": Object {
+      "email": "kowesor320@vvaa1.com",
+      "firstName": "mytest",
+      "id": "1ed5866d-cbdb-4f17-ad94-8ace76a4e94d",
+      "lastName": "lastnametest",
+    },
+  },
+  "errors": undefined,
   "extensions": undefined,
   "http": Object {
     "headers": Headers {
