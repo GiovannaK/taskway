@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.17% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/24</span>
+                <span class='fraction'>6/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.17% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>19/24</span>
+                <span class='fraction'>6/24</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -84,47 +84,47 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const nodemailer = require('nodemailer');
 const nodemailerSendgrid = require('nodemailer-sendgrid')
 &nbsp;
-const sendEmail = (options) =&gt; {
-  const transporter = nodemailer.createTransport(nodemailerSendgrid({
-    apiKey: process.env.SENDGRID_API_KEY
-  }))
-&nbsp;
-  const mailOptions = {
-    from: process.env.EMAIL_HOST_USER,
-    to: options.to,
-    subject: options.subject,
-    html: options.text
-  }
-&nbsp;
-  transporter.sendMail(mailOptions, (err, info) =&gt; {
+const sendEmail = (<span class="fstat-no" title="function not covered" >options) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  const transporter = nodemailer.createTransport(nodemailerSendgrid({</span>
+<span class="cstat-no" title="statement not covered" >    apiKey: process.env.SENDGRID_API_KEY</span>
+<span class="cstat-no" title="statement not covered" >  }))</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  const mailOptions = {</span>
+<span class="cstat-no" title="statement not covered" >    from: process.env.EMAIL_HOST_USER,</span>
+<span class="cstat-no" title="statement not covered" >    to: options.to,</span>
+<span class="cstat-no" title="statement not covered" >    subject: options.subject,</span>
+<span class="cstat-no" title="statement not covered" >    html: options.text</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  transporter.sendMail(mailOptions, (err, info) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    if (err) {</span>
 <span class="cstat-no" title="statement not covered" >      console.log(err);</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" >    console.log(info);</span>
 <span class="cstat-no" title="statement not covered" >  });</span>
-}
+<span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;
 module.exports = sendEmail;</pre></td></tr></table></pre>
 
@@ -133,7 +133,7 @@ module.exports = sendEmail;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Jun 07 2021 23:19:11 GMT-0300 (Horário Padrão de Brasília)
+                at Sun Jun 13 2021 22:20:13 GMT-0300 (Horário Padrão de Brasília)
             </div>
         </div>
         <script src="../../prettify.js"></script>

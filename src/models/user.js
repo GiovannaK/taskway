@@ -1,5 +1,4 @@
 'use strict';
-const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const {
   Model
@@ -11,19 +10,37 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({Post}) {
-      this.hasMany(Post, {foreignKey: 'author'})
+    static associate() {
+
     }
   };
   User.init({
-    name: {
+    id: {
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      type: DataTypes.UUID
+    },
+    firstName: {
       type: DataTypes.STRING,
       allowNull: false,
       trim: true,
       validate: {
         len: {
-          args: [3, 255],
-          msg: 'Name must have at least 3 characters'
+          args: [1, 255],
+          msg: 'first name must have at least 3 characters'
+        },
+
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      trim: true,
+      validate: {
+        len: {
+          args: [1, 255],
+          msg: 'last name must have at least 3 characters'
         },
 
       }

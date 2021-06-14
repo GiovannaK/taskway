@@ -4,7 +4,6 @@ const sendRegistrationEmail = require('./sendRegistrationEmail');
 const sendForgotPasswordEmail = require('./sendForgotPasswordEmail');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const sendEmail = require('../../../modules/mailer');
 
 module.exports = {
   Query: {
@@ -70,24 +69,25 @@ module.exports = {
       }
     },
 
-    userRegister: async (_, {data: {name, email, password}}) => {
+    userRegister: async (_, {data: {firstName, lastName, email, password}}) => {
       try {
 
         const userAlreadyExists = await User.findOne({where: {email}})
 
         if(userAlreadyExists){
-          throw new UserInputError('Something went wrong')
+          throw new UserInputError('User already exist')
         }
 
         const encryptedPassword = bcrypt.hashSync(password, 6)
 
         const user = await User.create({
-          name, email, password: encryptedPassword
+          firstName, lastName, email, password: encryptedPassword
         })
 
         const userData = await sendRegistrationEmail(user);
         return userData;
       } catch (error) {
+        console.log(error);
         throw new UserInputError('Bad Input')
       }
 
@@ -108,13 +108,14 @@ module.exports = {
         }
 
         user.isVerified = true
-        user.emailConfirmationExpires = undefined;
-        user.emailConfirmationToken = undefined;
+        user.emailConfirmationExpires = null;
+        user.emailConfirmationToken = null;
 
         await user.save();
 
         return user
       } catch (error) {
+        console.log(error);
         throw new Error('Cannot verify user account')
       }
     },
@@ -150,8 +151,8 @@ module.exports = {
         const encryptedPassword = bcrypt.hashSync(password, 6)
 
         user.password = encryptedPassword
-        user.passwordResetToken = undefined
-        user.passwordResetExpires = undefined
+        user.passwordResetToken = null
+        user.passwordResetExpires = null
 
         await user.save()
 

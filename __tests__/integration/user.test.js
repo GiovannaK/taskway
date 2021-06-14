@@ -14,7 +14,8 @@ describe('Register', () => {
     const res = await mutate({
       mutation: CREATE_USER,
       variables: {
-        name: "mytest",
+        firstName: "mytest",
+        lastName: "lastnametest",
         email: "kowesor320@vvaa1.com",
         password: "testando"
       }

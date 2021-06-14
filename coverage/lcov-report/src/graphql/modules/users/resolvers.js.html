@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">24.85% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>42/169</span>
+                <span class='fraction'>33/165</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/3</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">24.85% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>42/169</span>
+                <span class='fraction'>33/165</span>
             </div>
         
             
@@ -221,12 +221,7 @@
 <a name='L162'></a><a href='#L162'>162</a>
 <a name='L163'></a><a href='#L163'>163</a>
 <a name='L164'></a><a href='#L164'>164</a>
-<a name='L165'></a><a href='#L165'>165</a>
-<a name='L166'></a><a href='#L166'>166</a>
-<a name='L167'></a><a href='#L167'>167</a>
-<a name='L168'></a><a href='#L168'>168</a>
-<a name='L169'></a><a href='#L169'>169</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L165'></a><a href='#L165'>165</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -296,22 +291,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -320,6 +299,20 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -365,7 +358,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -399,7 +391,6 @@ const sendRegistrationEmail = require('./sendRegistrationEmail');
 const sendForgotPasswordEmail = require('./sendForgotPasswordEmail');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const sendEmail = require('../../../modules/mailer');
 &nbsp;
 module.exports = {
   Query: {
@@ -445,7 +436,6 @@ module.exports = {
 <span class="cstat-no" title="statement not covered" >        }</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        const isPasswordMatch = await bcrypt.compare(password, user.password)</span>
-<span class="cstat-no" title="statement not covered" >        console.log('MATCH', isPasswordMatch)</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        if(!isPasswordMatch){</span>
 <span class="cstat-no" title="statement not covered" >          throw new UserInputError('Invalid credentials')</span>
@@ -462,32 +452,31 @@ module.exports = {
 <span class="cstat-no" title="statement not covered" >        return data;</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >      } catch (error) {</span>
-<span class="cstat-no" title="statement not covered" >        console.log(error)</span>
 <span class="cstat-no" title="statement not covered" >        throw error</span>
 <span class="cstat-no" title="statement not covered" >      }</span>
 <span class="cstat-no" title="statement not covered" >    },</span>
 &nbsp;
-    userRegister: async (_, {data: {name, email, password}}) =&gt; {
+    userRegister: async (_, {data: {firstName, lastName, email, password}}) =&gt; {
       try {
 &nbsp;
-        const userAlreadyExists = await User.findOne({where: {email}})
-&nbsp;
-        if(userAlreadyExists)<span class="branch-0 cbranch-no" title="branch not covered" >{</span>
-<span class="cstat-no" title="statement not covered" >          throw new UserInputError('Something went wrong')</span>
+<span class="branch-0 cbranch-no" title="branch not covered" >        const userAlreadyExists = await User.findOne({where: {email}})</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        if(userAlreadyExists){</span>
+<span class="cstat-no" title="statement not covered" >          throw new UserInputError('User already exist')</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
-&nbsp;
-        const encryptedPassword = bcrypt.hashSync(password, 6)
-&nbsp;
-        const user = await User.create({
-          name, email, password: encryptedPassword
-        })
-&nbsp;
-        const userData = await sendRegistrationEmail(user);
-        return userData;
-      } <span class="branch-0 cbranch-no" title="branch not covered" >catch (error) {</span>
-<span class="cstat-no" title="statement not covered" >        console.log(error)</span>
-<span class="cstat-no" title="statement not covered" >        throw new UserInputError('Bad Input')</span>
-<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        const encryptedPassword = bcrypt.hashSync(password, 6)</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        const user = await User.create({</span>
+<span class="cstat-no" title="statement not covered" >          firstName, lastName, email, password: encryptedPassword</span>
+<span class="cstat-no" title="statement not covered" >        })</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        const userData = await sendRegistrationEmail(user);</span>
+<span class="cstat-no" title="statement not covered" >        return userData;</span>
+      } catch (error) {
+        console.log(error);
+        throw new UserInputError('Bad Input')
+      }
 &nbsp;
     },
 &nbsp;
@@ -506,8 +495,8 @@ module.exports = {
 <span class="cstat-no" title="statement not covered" >        }</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        user.isVerified = true</span>
-<span class="cstat-no" title="statement not covered" >        user.emailConfirmationExpires = undefined;</span>
-<span class="cstat-no" title="statement not covered" >        user.emailConfirmationToken = undefined;</span>
+<span class="cstat-no" title="statement not covered" >        user.emailConfirmationExpires = null;</span>
+<span class="cstat-no" title="statement not covered" >        user.emailConfirmationToken = null;</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        await user.save();</span>
 <span class="cstat-no" title="statement not covered" ></span>
@@ -549,14 +538,13 @@ module.exports = {
 <span class="cstat-no" title="statement not covered" >        const encryptedPassword = bcrypt.hashSync(password, 6)</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        user.password = encryptedPassword</span>
-<span class="cstat-no" title="statement not covered" >        user.passwordResetToken = undefined</span>
-<span class="cstat-no" title="statement not covered" >        user.passwordResetExpires = undefined</span>
+<span class="cstat-no" title="statement not covered" >        user.passwordResetToken = null</span>
+<span class="cstat-no" title="statement not covered" >        user.passwordResetExpires = null</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        await user.save()</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        return user</span>
 <span class="cstat-no" title="statement not covered" >      } catch (error) {</span>
-<span class="cstat-no" title="statement not covered" >        console.log(error)</span>
 <span class="cstat-no" title="statement not covered" >        throw new UserInputError('Something went wrong, check if you type a valid password type', {error})</span>
 <span class="cstat-no" title="statement not covered" >      }</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
@@ -568,7 +556,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Jun 07 2021 23:19:11 GMT-0300 (Horário Padrão de Brasília)
+                at Sun Jun 13 2021 22:20:13 GMT-0300 (Horário Padrão de Brasília)
             </div>
         </div>
         <script src="../../../../prettify.js"></script>
