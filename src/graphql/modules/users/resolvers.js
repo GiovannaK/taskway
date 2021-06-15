@@ -1,5 +1,5 @@
 const { UserInputError } = require('apollo-server-errors');
-const {User} = require('../../../models');
+const {User, Profile} = require('../../../models');
 const sendRegistrationEmail = require('./sendRegistrationEmail');
 const sendForgotPasswordEmail = require('./sendForgotPasswordEmail');
 const jwt = require('jsonwebtoken');
@@ -107,9 +107,17 @@ module.exports = {
           throw new Error('Token expired')
         }
 
-        user.isVerified = true
+        user.isVerified = true;
         user.emailConfirmationExpires = null;
         user.emailConfirmationToken = null;
+
+        console.log('ID', user.id);
+        console.log('ID TYPE', typeof user.id);
+
+        await Profile.create({
+          userId: user.id
+        })
+
 
         await user.save();
 
