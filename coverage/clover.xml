@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1623648492087" clover="3.2.0">
-  <project timestamp="1623648492088" name="All files">
-    <metrics statements="494" coveredstatements="415" conditionals="39" coveredconditionals="19" methods="16" coveredmethods="14" elements="549" coveredelements="448" complexity="0" loc="494" ncloc="494" packages="8" files="12" classes="12"/>
+<coverage generated="1623726586049" clover="3.2.0">
+  <project timestamp="1623726586049" name="All files">
+    <metrics statements="538" coveredstatements="461" conditionals="43" coveredconditionals="22" methods="18" coveredmethods="16" elements="599" coveredelements="499" complexity="0" loc="538" ncloc="538" packages="8" files="13" classes="13"/>
     <package name="__tests__.graphqlQueries">
       <metrics statements="50" coveredstatements="50" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="userQueries.js" path="C:\Users\T-Gamer\Desktop\projects\taskway\__tests__\graphqlQueries\userQueries.js">
@@ -67,8 +67,8 @@
         <line num="3" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="4" count="5" type="stmt"/>
         <line num="5" count="5" type="cond" truecount="1" falsecount="0"/>
-        <line num="6" count="5" type="stmt"/>
-        <line num="7" count="5" type="stmt"/>
+        <line num="6" count="10" type="stmt"/>
+        <line num="7" count="10" type="stmt"/>
         <line num="8" count="5" type="stmt"/>
         <line num="9" count="5" type="stmt"/>
       </file>
@@ -147,9 +147,9 @@
       </file>
     </package>
     <package name="src.graphql.modules.users">
-      <metrics statements="215" coveredstatements="149" conditionals="23" coveredconditionals="7" methods="9" coveredmethods="7"/>
+      <metrics statements="223" coveredstatements="157" conditionals="23" coveredconditionals="7" methods="9" coveredmethods="7"/>
       <file name="resolvers.js" path="C:\Users\T-Gamer\Desktop\projects\taskway\src\graphql\modules\users\resolvers.js">
-        <metrics statements="165" coveredstatements="111" conditionals="19" coveredconditionals="5" methods="7" coveredmethods="5"/>
+        <metrics statements="173" coveredstatements="119" conditionals="19" coveredconditionals="5" methods="7" coveredmethods="5"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -266,55 +266,63 @@
         <line num="114" count="1" type="stmt"/>
         <line num="115" count="1" type="stmt"/>
         <line num="116" count="1" type="stmt"/>
-        <line num="117" count="1" type="cond" truecount="0" falsecount="1"/>
-        <line num="118" count="0" type="stmt"/>
-        <line num="119" count="0" type="stmt"/>
-        <line num="120" count="0" type="stmt"/>
+        <line num="117" count="1" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
+        <line num="119" count="1" type="stmt"/>
+        <line num="120" count="1" type="stmt"/>
         <line num="121" count="1" type="stmt"/>
-        <line num="122" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="122" count="1" type="stmt"/>
         <line num="123" count="1" type="stmt"/>
         <line num="124" count="1" type="stmt"/>
-        <line num="125" count="1" type="stmt"/>
-        <line num="126" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="125" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="126" count="0" type="stmt"/>
         <line num="127" count="0" type="stmt"/>
         <line num="128" count="0" type="stmt"/>
         <line num="129" count="1" type="stmt"/>
-        <line num="130" count="1" type="stmt"/>
+        <line num="130" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="131" count="1" type="stmt"/>
-        <line num="132" count="1" type="cond" truecount="0" falsecount="1"/>
-        <line num="133" count="0" type="stmt"/>
-        <line num="134" count="0" type="stmt"/>
-        <line num="135" count="1" type="stmt"/>
-        <line num="136" count="1" type="stmt"/>
-        <line num="137" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="132" count="1" type="stmt"/>
+        <line num="133" count="1" type="stmt"/>
+        <line num="134" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="135" count="0" type="stmt"/>
+        <line num="136" count="0" type="stmt"/>
+        <line num="137" count="1" type="stmt"/>
         <line num="138" count="1" type="stmt"/>
         <line num="139" count="1" type="stmt"/>
-        <line num="140" count="1" type="stmt"/>
-        <line num="141" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="140" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="141" count="0" type="stmt"/>
         <line num="142" count="0" type="stmt"/>
-        <line num="143" count="0" type="stmt"/>
+        <line num="143" count="1" type="stmt"/>
         <line num="144" count="1" type="stmt"/>
-        <line num="145" count="1" type="stmt"/>
+        <line num="145" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="146" count="1" type="stmt"/>
-        <line num="147" count="1" type="cond" truecount="0" falsecount="1"/>
-        <line num="148" count="0" type="stmt"/>
-        <line num="149" count="0" type="stmt"/>
-        <line num="150" count="1" type="stmt"/>
-        <line num="151" count="1" type="stmt"/>
+        <line num="147" count="1" type="stmt"/>
+        <line num="148" count="1" type="stmt"/>
+        <line num="149" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="150" count="0" type="stmt"/>
+        <line num="151" count="0" type="stmt"/>
         <line num="152" count="1" type="stmt"/>
         <line num="153" count="1" type="stmt"/>
         <line num="154" count="1" type="stmt"/>
-        <line num="155" count="1" type="stmt"/>
-        <line num="156" count="1" type="stmt"/>
-        <line num="157" count="1" type="stmt"/>
+        <line num="155" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="156" count="0" type="stmt"/>
+        <line num="157" count="0" type="stmt"/>
         <line num="158" count="1" type="stmt"/>
         <line num="159" count="1" type="stmt"/>
-        <line num="160" count="1" type="cond" truecount="0" falsecount="1"/>
-        <line num="161" count="0" type="stmt"/>
-        <line num="162" count="0" type="stmt"/>
+        <line num="160" count="1" type="stmt"/>
+        <line num="161" count="1" type="stmt"/>
+        <line num="162" count="1" type="stmt"/>
         <line num="163" count="1" type="stmt"/>
         <line num="164" count="1" type="stmt"/>
         <line num="165" count="1" type="stmt"/>
+        <line num="166" count="1" type="stmt"/>
+        <line num="167" count="1" type="stmt"/>
+        <line num="168" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="169" count="0" type="stmt"/>
+        <line num="170" count="0" type="stmt"/>
+        <line num="171" count="1" type="stmt"/>
+        <line num="172" count="1" type="stmt"/>
+        <line num="173" count="1" type="stmt"/>
       </file>
       <file name="sendForgotPasswordEmail.js" path="C:\Users\T-Gamer\Desktop\projects\taskway\src\graphql\modules\users\sendForgotPasswordEmail.js">
         <metrics statements="25" coveredstatements="19" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
@@ -374,7 +382,7 @@
       </file>
     </package>
     <package name="src.models">
-      <metrics statements="145" coveredstatements="145" conditionals="8" coveredconditionals="8" methods="4" coveredmethods="4"/>
+      <metrics statements="181" coveredstatements="181" conditionals="10" coveredconditionals="10" methods="6" coveredmethods="6"/>
       <file name="index.js" path="C:\Users\T-Gamer\Desktop\projects\taskway\src\models\index.js">
         <metrics statements="37" coveredstatements="37" conditionals="4" coveredconditionals="4" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
@@ -397,14 +405,54 @@
         <line num="18" count="1" type="stmt"/>
         <line num="19" count="1" type="stmt"/>
         <line num="20" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="21" count="2" type="cond" truecount="1" falsecount="0"/>
-        <line num="22" count="2" type="stmt"/>
+        <line num="21" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="22" count="3" type="stmt"/>
         <line num="23" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+      </file>
+      <file name="profile.js" path="C:\Users\T-Gamer\Desktop\projects\taskway\src\models\profile.js">
+        <metrics statements="36" coveredstatements="36" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
         <line num="24" count="1" type="stmt"/>
         <line num="25" count="1" type="stmt"/>
         <line num="26" count="1" type="stmt"/>
         <line num="27" count="1" type="stmt"/>
-        <line num="28" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="28" count="1" type="stmt"/>
         <line num="29" count="1" type="stmt"/>
         <line num="30" count="1" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
@@ -413,7 +461,6 @@
         <line num="34" count="1" type="stmt"/>
         <line num="35" count="1" type="stmt"/>
         <line num="36" count="1" type="stmt"/>
-        <line num="37" count="1" type="stmt"/>
       </file>
       <file name="user.js" path="C:\Users\T-Gamer\Desktop\projects\taskway\src\models\user.js">
         <metrics statements="108" coveredstatements="108" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="4"/>
@@ -528,9 +575,9 @@
       </file>
     </package>
     <package name="src.modules">
-      <metrics statements="23" coveredstatements="19" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+      <metrics statements="23" coveredstatements="21" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
       <file name="mailer.js" path="C:\Users\T-Gamer\Desktop\projects\taskway\src\modules\mailer.js">
-        <metrics statements="23" coveredstatements="19" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <metrics statements="23" coveredstatements="21" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -546,11 +593,11 @@
         <line num="13" count="2" type="stmt"/>
         <line num="14" count="2" type="stmt"/>
         <line num="15" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
+        <line num="16" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="17" count="1" type="cond" truecount="0" falsecount="1"/>
         <line num="18" count="0" type="stmt"/>
         <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
         <line num="21" count="2" type="stmt"/>
         <line num="22" count="1" type="stmt"/>
         <line num="23" count="1" type="stmt"/>

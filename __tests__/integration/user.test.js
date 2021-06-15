@@ -7,7 +7,7 @@ const {
 const server = require('../../src/server');
 const {createTestClient} = require('apollo-server-testing')
 const truncate = require('../utils/truncate')
-const {User} = require('../../src/models')
+const {User, Profile} = require('../../src/models')
 const bcrypt = require('bcryptjs')
 
 describe('Authentication flux', () => {
@@ -46,6 +46,10 @@ describe('Authentication flux', () => {
     })
     const serverTest = server
     const {mutate} = createTestClient(serverTest);
+
+    await Profile.create({
+      userId: user.id
+    })
 
     const res = await mutate({
       mutation: CONFIRM_ACCOUNT,
