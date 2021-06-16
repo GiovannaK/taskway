@@ -9,7 +9,7 @@ module.exports = {
     region: process.env.AWS_DEFAULT_REGION,
     params: {
       ACL: 'public-read',
-      Bucket: process.env.AWS_SECRET_ACCESS_KEY,
+      Bucket: process.env.AWS_BUCKET_NAME,
     },
   },
   app: {

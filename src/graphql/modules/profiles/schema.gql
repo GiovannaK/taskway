@@ -1,4 +1,3 @@
-scalar UploadFile
 type Profile {
   id: ID!
   imageUrl: String
@@ -12,7 +11,7 @@ type Profile {
 }
 
 type Mutation {
-  singleUpload(file: UploadFile!): Profile,
+  singleUpload(file: Upload!): Profile,
 }
 
 input ProfileInput {

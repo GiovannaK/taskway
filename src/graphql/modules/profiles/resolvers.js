@@ -1,6 +1,5 @@
 const {v4: uuid} = require('uuid')
 const s3 = require('../../../modules/s3');
-const {GraphQLUpload} = require('graphql-upload');
 
 let processUpload = async(file) => {
   try {
@@ -35,7 +34,6 @@ let processUpload = async(file) => {
 
 
 module.exports = {
-  UploadFile: GraphQLUpload,
   Mutation: {
     singleUpload: async(_, args) => {
       return processUpload(args.file)
