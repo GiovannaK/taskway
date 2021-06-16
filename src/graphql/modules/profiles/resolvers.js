@@ -1,7 +1,9 @@
 const {v4: uuid} = require('uuid')
 const s3 = require('../../../modules/s3');
+const {Profile} = require('../../../models');
 
-let processUpload = async(file) => {
+
+let processUpload = async(file, id) => {
   try {
     console.log(file);
     const {createReadStream, filename, mimetype, encoding} = await file;
@@ -11,6 +13,16 @@ let processUpload = async(file) => {
       Key: `${uuid()}${filename}`,
       ContentType: mimetype
     }).promise();
+
+    const profile = await Profile.findByPk(id)
+
+    if(!profile){
+      throw new Error('Profile not exist')
+    }
+
+    profile.imageUrl = Location
+
+    await profile.save();
 
     return new Promise((resolve, reject) => {
       if(Location){
@@ -36,7 +48,7 @@ let processUpload = async(file) => {
 module.exports = {
   Mutation: {
     singleUpload: async(_, args) => {
-      return processUpload(args.file)
+      return processUpload(args.file, args.id)
     }
   }
 }

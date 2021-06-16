@@ -11,7 +11,7 @@ type Profile {
 }
 
 type Mutation {
-  singleUpload(file: Upload!): Profile,
+  singleUpload(file: Upload!, id: ID!): Profile,
 }
 
 input ProfileInput {
