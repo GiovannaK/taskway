@@ -16,9 +16,11 @@
   "dependencies": {
     "apollo-server": "^2.25.0",
     "apollo-server-testing": "^2.25.0",
+    "aws-sdk": "^2.928.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",
     "graphql": "^15.5.0",
+    "graphql-upload": "^12.0.0",
     "jsonwebtoken": "^8.5.1",
     "merge-graphql-schemas": "^1.7.8",
     "nodemailer": "^6.6.1",
@@ -26,7 +28,8 @@
     "nodemon": "^2.0.7",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.6.2"
+    "sequelize": "^6.6.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "jest": "^27.0.4",

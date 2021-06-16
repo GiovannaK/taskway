@@ -1,0 +1,21 @@
+scalar UploadFile
+type Profile {
+  id: ID!
+  imageUrl: String
+  filename: String
+  mimetype: String
+  encoding: String
+  bio: String!
+  userId: User!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Mutation {
+  singleUpload(file: UploadFile!): Profile,
+}
+
+input ProfileInput {
+  bio: String!
+}
+

@@ -10,7 +10,7 @@ require('dotenv').config({
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({req}) => ({req})
+  context: ({req}) => ({req}),
 });
 if(process.env.NODE_ENV !== 'test'){
 
