@@ -1,13 +1,15 @@
 const {v4: uuid} = require('uuid')
 const s3 = require('../../../modules/s3');
 const {Profile} = require('../../../models');
+const auth = require('../../../middlewares/auth');
 
 
-let processUpload = async(file, id) => {
+let processUpload = async(file, id, context) => {
   try {
-    console.log(file);
-    const {createReadStream, filename, mimetype, encoding} = await file;
-    const stream = createReadStream()
+    console.log('>>>', console.log(file))
+    auth(context)
+    const {createReadStream, filename, mimetype, encoding} = await file
+    const stream = await createReadStream()
     const {Location} = await s3.upload({
       Body: stream,
       Key: `${uuid()}${filename}`,
@@ -47,8 +49,8 @@ let processUpload = async(file, id) => {
 
 module.exports = {
   Mutation: {
-    singleUpload: async(_, args) => {
-      return processUpload(args.file, args.id)
+    singleUpload: async(_, args, context) => {
+      return processUpload(args.file, args.id, context)
     }
   }
 }

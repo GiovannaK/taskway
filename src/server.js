@@ -3,6 +3,9 @@ const {sequelize} = require('./models')
 const express = require('express')
 const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers')
+const cors = require('cors')
+const cookieParser = require('cookie-parser')
+
 require('dotenv').config({
   path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
 })
@@ -12,10 +15,23 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({req}) => ({req}),
+  context: ({req, res, next}) => ({req, res, next}),
 });
 
-server.applyMiddleware({app})
+const corsOptions = {
+  credentials: true,
+  origin: [`${process.env.CLIENT_URL}`, 'http://localhost:4000'],
+  methods: 'GET, POST, PUT, DELETE'
+}
+
+app.use(cookieParser())
+server.applyMiddleware({app, path: '/', cors: corsOptions,})
+
+app.use(cors({
+  credentials: true,
+  origin: [`${process.env.CLIENT_URL}`, 'http://localhost:4000'],
+}))
+
 
 if(process.env.NODE_ENV !== 'test'){
 

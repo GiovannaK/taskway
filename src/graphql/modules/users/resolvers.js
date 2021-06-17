@@ -36,7 +36,7 @@ module.exports = {
     }
   },
   Mutation: {
-    userLogin: async(_, {email, password}) => {
+    userLogin: async(_, {email, password}, {req, res}) => {
       try {
         const user = await User.findOne({where: {email}})
 
@@ -54,11 +54,17 @@ module.exports = {
           throw new UserInputError('Invalid credentials')
         }
 
-        const {id} = user
-
-        const token = jwt.sign({id}, process.env.TOKEN_SECRET, {
+        const token = jwt.sign({userId: user.id}, process.env.TOKEN_SECRET, {
           expiresIn: process.env.TOKEN_EXPIRATION
         })
+
+        res.cookie("id", token, {
+          httpOnly: true,
+          maxAge: 1000 * 60 * 24 * 7
+        })
+
+
+        console.log('COOKIE', req.cookies);
 
         const data = {token, id: user.id, ...user}
 
