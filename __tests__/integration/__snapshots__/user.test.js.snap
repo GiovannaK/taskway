@@ -4,8 +4,8 @@ exports[`Authentication flux Should authenticate user with valid credentials 1`]
 Object {
   "data": Object {
     "userLogin": Object {
-      "id": "970ecbc6-4c40-4877-aec3-c046d6eb0fa1",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk3MGVjYmM2LTRjNDAtNDg3Ny1hZWMzLWMwNDZkNmViMGZhMSIsImlhdCI6MTYyMzcyNjU4MiwiZXhwIjoxNjIzODEyOTgyfQ.Y5lQPhh4CcNFEncGLcZ5UG6US9eol2gw3fpiwfI9Wak",
+      "id": "e0b382ec-e374-45bf-92ea-f231946632f4",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUwYjM4MmVjLWUzNzQtNDViZi05MmVhLWYyMzE5NDY2MzJmNCIsImlhdCI6MTYyMzg4MTcyNSwiZXhwIjoxNjIzOTY4MTI1fQ.H3XIVOdPgylDnT3jbVHU7kAA7pgF7hmu2aFqmbmYutg",
     },
   },
   "errors": undefined,
@@ -23,7 +23,7 @@ Object {
   "data": Object {
     "userConfirmAccount": Object {
       "email": "teste@email.com",
-      "id": "2ffda1f8-9f2d-4e52-89b6-547509a5490e",
+      "id": "0ab2f478-370a-4caa-89dd-8c25de9de79f",
       "isVerified": true,
     },
   },
@@ -41,8 +41,8 @@ exports[`Authentication flux Should generate reset token 1`] = `
 Object {
   "data": Object {
     "userForgotPassword": Object {
-      "id": "eac51f41-719b-4e1a-bea1-68613a82e952",
-      "passwordResetToken": "1cf614560833306adcdb1bad756f266050e2dffe",
+      "id": "ae151581-f46e-4c4d-b678-8aaaa2e44a8f",
+      "passwordResetToken": "6bf0b0e875689bc6125a525729befad93c934a70",
     },
   },
   "errors": undefined,
@@ -60,9 +60,9 @@ Object {
   "data": Object {
     "userRegister": Object {
       "email": "kowesor320@vvaa1.com",
-      "emailConfirmationToken": "046374e569843b2890185481a3bbbea5c073cd5c",
+      "emailConfirmationToken": "eb9a7b97b3cd4e0187d4108a2de40c58a9d4f6c0",
       "firstName": "mytest",
-      "id": "556b1d81-f4da-430a-a6de-fc707d538973",
+      "id": "f1cb5f6f-568f-4248-819f-a536fcbd9166",
       "lastName": "lastnametest",
     },
   },
@@ -81,7 +81,7 @@ Object {
   "data": Object {
     "userResetPassword": Object {
       "email": "teste@email.com",
-      "id": "68a88254-d34d-4c46-87de-fe8c1b002c5d",
+      "id": "2fa7d69f-8e86-459d-8085-02e6274cbb61",
     },
   },
   "errors": undefined,
