@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { ApolloServer } = require('apollo-server-express');
 const express = require('express');
-const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { sequelize } = require('./models');
 const typeDefs = require('./graphql/typeDefs');
@@ -26,11 +25,6 @@ const corsOptions = {
 
 app.use(cookieParser());
 server.applyMiddleware({ app, path: '/', cors: corsOptions });
-
-app.use(cors({
-  credentials: true,
-  origin: [`${process.env.CLIENT_URL}`, 'http://localhost:4000'],
-}));
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen({ port: process.env.PORT || 4000 }, () => {
