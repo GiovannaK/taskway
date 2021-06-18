@@ -62,11 +62,8 @@ module.exports = {
 
         res.cookie("id", token, {
           httpOnly: true,
-          maxAge: 1000 * 60 * 24 * 7
+          maxAge: 1000 * 60 * 60 * 24 * 7
         })
-
-
-        console.log('COOKIE', req.cookies);
 
         const data = {token, id: user.id, ...user}
 
