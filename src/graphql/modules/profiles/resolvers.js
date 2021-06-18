@@ -1,92 +1,90 @@
-const {v4: uuid} = require('uuid')
+/* eslint-disable prefer-promise-reject-errors */
+const { v4: uuid } = require('uuid');
 const s3 = require('../../../modules/s3');
-const {Profile} = require('../../../models');
+const { Profile } = require('../../../models');
 const auth = require('../../../middlewares/auth');
 
-
-let processUpload = async(file, context) => {
+const processUpload = async (file, context) => {
   try {
-    auth(context)
-    const {createReadStream, filename, mimetype, encoding} = await file
-    const stream = await createReadStream()
-    const {Location} = await s3.upload({
+    auth(context);
+    const {
+      createReadStream, filename, mimetype, encoding,
+    } = await file;
+    const stream = await createReadStream();
+    const { Location } = await s3.upload({
       Body: stream,
       Key: `${uuid()}${filename}`,
-      ContentType: mimetype
+      ContentType: mimetype,
     }).promise();
 
-    const {userId} = context.req
-    const profile = await Profile.findOne({where: {userId}})
+    const { userId } = context.req;
+    const profile = await Profile.findOne({ where: { userId } });
 
-    if(!profile){
-      throw new Error('Profile not exist')
+    if (!profile) {
+      throw new Error('Profile not exist');
     }
 
-    profile.imageUrl = Location
+    profile.imageUrl = Location;
 
     await profile.save();
 
     return new Promise((resolve, reject) => {
-      if(Location){
+      if (Location) {
         resolve({
           mimetype,
           filename,
           encoding,
-          imageUrl: Location
-        })
-      }else{
+          imageUrl: Location,
+        });
+      } else {
         reject({
-          message: 'Upload failed'
-        })
+          message: 'Upload failed',
+        });
       }
-    })
+    });
   } catch (error) {
-    throw error
+    throw error;
   }
-}
-
+};
 
 module.exports = {
   Query: {
-    profile: async(_, __, context) => {
+    profile: async (_, __, context) => {
       try {
         auth(context);
-        const {userId} = context.req
-        const profile = await Profile.findOne({where: {userId}})
+        const { userId } = context.req;
+        const profile = await Profile.findOne({ where: { userId } });
 
-        if(!profile){
-          throw new Error('Cannot find user')
+        if (!profile) {
+          throw new Error('Cannot find user');
         }
 
-        return profile
-
+        return profile;
       } catch (error) {
-        throw new Error('Cannot show profile')
+        throw new Error('Cannot show profile');
       }
-    }
+    },
   },
   Mutation: {
-    singleUpload: async(_, args, context) => {
-      return processUpload(args.file, context)
-    },
-    updateBio: async(_, {bio}, context) => {
+    singleUpload: async (_, args, context) => processUpload(args.file, context),
+    updateBio: async (_, { bio }, context) => {
       try {
         auth(context);
-        const {userId} = context.req
+        const { userId } = context.req;
 
-        const profile = await Profile.findOne({where: {userId}})
+        const profile = await Profile.findOne({ where: { userId } });
 
-        if(!profile){
-          throw new Error('Cannot find profile')
+        if (!profile) {
+          throw new Error('Cannot find profile');
         }
-        profile.bio = bio
+        profile.bio = bio;
 
-        await profile.save()
+        await profile.save();
 
-        return profile
+        return profile;
       } catch (error) {
-        throw error
+        throw error;
       }
-    }
-  }
-}
+    },
+  },
+};

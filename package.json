@@ -2,7 +2,7 @@
   "name": "taskway",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "jest.config.js",
   "scripts": {
     "pretest": "SET NODE_ENV=test& sequelize db:migrate",
     "test": "SET NODE_ENV=test& jest --updateSnapshot",
@@ -10,10 +10,15 @@
     "start": "node src/server.js",
     "dev": "nodemon -L src/server.js -e js,gql --ignore __tests__"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GiovannaK/taskway.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-server-errors": "^2.5.0",
     "apollo-server-express": "^2.18.1",
     "apollo-server-testing": "^2.25.0",
     "aws-sdk": "^2.928.0",
@@ -30,11 +35,19 @@
     "nodemon": "^2.0.7",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.3",
+    "prettier": "^2.3.1",
     "sequelize": "^6.6.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4",
     "jest": "^27.0.4",
     "sqlite3": "^5.0.2"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/GiovannaK/taskway/issues"
+  },
+  "homepage": "https://github.com/GiovannaK/taskway#readme"
 }
