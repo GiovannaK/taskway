@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1623984263290" clover="3.2.0">
-  <project timestamp="1623984263290" name="All files">
+<coverage generated="1623986773639" clover="3.2.0">
+  <project timestamp="1623986773640" name="All files">
     <metrics statements="687" coveredstatements="552" conditionals="45" coveredconditionals="23" methods="22" coveredmethods="17" elements="754" coveredelements="592" complexity="0" loc="687" ncloc="687" packages="10" files="17" classes="17"/>
     <package name="__tests__.graphqlQueries">
       <metrics statements="61" coveredstatements="61" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>

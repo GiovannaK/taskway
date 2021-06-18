@@ -41,7 +41,7 @@ describe('Query users', () => {
     ]
 
     await User.bulkCreate(users)
-
+    const serverTest = server
     const {query} = createTestClient(serverTest);
     const res = await query({
       query: USERS
@@ -58,6 +58,7 @@ describe('Authentication flux', () => {
   })
   it('Should register user and generate emailConfirmationToken', async () => {
     const serverTest = server
+
     const {mutate} = createTestClient(serverTest);
 
     const res = await mutate({
@@ -123,7 +124,7 @@ describe('Authentication flux', () => {
       variables: {
         email: user.email,
         password: "testando"
-      }
+      },
     })
 
     expect(res).toMatchSnapshot();

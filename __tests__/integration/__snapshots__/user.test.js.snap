@@ -20,7 +20,7 @@ Object {
   "data": Object {
     "userConfirmAccount": Object {
       "email": "teste@email.com",
-      "id": "189de3da-1c11-4222-acb9-090949e16074",
+      "id": "dcd1ae74-083c-454e-baac-c5219245f044",
       "isVerified": true,
     },
   },
@@ -38,8 +38,8 @@ exports[`Authentication flux Should generate reset token 1`] = `
 Object {
   "data": Object {
     "userForgotPassword": Object {
-      "id": "505db9cb-10fe-4d15-9607-83bab27045a4",
-      "passwordResetToken": "87683c47e6dba8d9a23e67f50e1a08add67166c4",
+      "id": "11d7fb99-45b8-49e6-90f5-12b14cc5fd17",
+      "passwordResetToken": "1e2493cec16f39eed105b823ec300f079b8be15d",
     },
   },
   "errors": undefined,
@@ -57,9 +57,9 @@ Object {
   "data": Object {
     "userRegister": Object {
       "email": "kowesor320@vvaa1.com",
-      "emailConfirmationToken": "1993b235f230e804e71074eab3fbcb099017b806",
+      "emailConfirmationToken": "cd9dc6a45f6aa3025e90b783c5ada1de790e979b",
       "firstName": "mytest",
-      "id": "1fc67d35-acec-463c-bb37-b677028e9df5",
+      "id": "ad946997-7d40-467e-ba84-5e3814300e1a",
       "lastName": "lastnametest",
     },
   },
@@ -78,7 +78,7 @@ Object {
   "data": Object {
     "userResetPassword": Object {
       "email": "teste@email.com",
-      "id": "8abed105-47bf-4931-b9a3-814da2bf63dc",
+      "id": "b1259c0b-adfc-48df-a93b-7cd8ce495009",
     },
   },
   "errors": undefined,
@@ -98,13 +98,13 @@ Object {
       Object {
         "email": "teste@email.com",
         "firstName": "teste1",
-        "id": "61c3cec6-8ea8-435e-b124-6a238a9fe7af",
+        "id": "8db80917-046c-4a8a-a71a-2d62134c503b",
         "lastName": "teste last",
       },
       Object {
         "email": "teste2@email.com",
         "firstName": "teste2",
-        "id": "35bafc2a-cfe8-44e9-8dde-ff298f939e21",
+        "id": "d016c027-5f99-4005-a1a8-1c1883aa44be",
         "lastName": "teste2 last",
       },
     ],
