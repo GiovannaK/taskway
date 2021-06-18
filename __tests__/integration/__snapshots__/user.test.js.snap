@@ -2,13 +2,10 @@
 
 exports[`Authentication flux Should authenticate user with valid credentials 1`] = `
 Object {
-  "data": Object {
-    "userLogin": Object {
-      "id": "e0b382ec-e374-45bf-92ea-f231946632f4",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUwYjM4MmVjLWUzNzQtNDViZi05MmVhLWYyMzE5NDY2MzJmNCIsImlhdCI6MTYyMzg4MTcyNSwiZXhwIjoxNjIzOTY4MTI1fQ.H3XIVOdPgylDnT3jbVHU7kAA7pgF7hmu2aFqmbmYutg",
-    },
-  },
-  "errors": undefined,
+  "data": null,
+  "errors": Array [
+    [GraphQLError: Cannot read property 'cookie' of undefined],
+  ],
   "extensions": undefined,
   "http": Object {
     "headers": Headers {
@@ -23,7 +20,7 @@ Object {
   "data": Object {
     "userConfirmAccount": Object {
       "email": "teste@email.com",
-      "id": "0ab2f478-370a-4caa-89dd-8c25de9de79f",
+      "id": "189de3da-1c11-4222-acb9-090949e16074",
       "isVerified": true,
     },
   },
@@ -41,8 +38,8 @@ exports[`Authentication flux Should generate reset token 1`] = `
 Object {
   "data": Object {
     "userForgotPassword": Object {
-      "id": "ae151581-f46e-4c4d-b678-8aaaa2e44a8f",
-      "passwordResetToken": "6bf0b0e875689bc6125a525729befad93c934a70",
+      "id": "505db9cb-10fe-4d15-9607-83bab27045a4",
+      "passwordResetToken": "87683c47e6dba8d9a23e67f50e1a08add67166c4",
     },
   },
   "errors": undefined,
@@ -60,9 +57,9 @@ Object {
   "data": Object {
     "userRegister": Object {
       "email": "kowesor320@vvaa1.com",
-      "emailConfirmationToken": "eb9a7b97b3cd4e0187d4108a2de40c58a9d4f6c0",
+      "emailConfirmationToken": "1993b235f230e804e71074eab3fbcb099017b806",
       "firstName": "mytest",
-      "id": "f1cb5f6f-568f-4248-819f-a536fcbd9166",
+      "id": "1fc67d35-acec-463c-bb37-b677028e9df5",
       "lastName": "lastnametest",
     },
   },
@@ -81,8 +78,36 @@ Object {
   "data": Object {
     "userResetPassword": Object {
       "email": "teste@email.com",
-      "id": "2fa7d69f-8e86-459d-8085-02e6274cbb61",
+      "id": "8abed105-47bf-4931-b9a3-814da2bf63dc",
     },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query users Should return multiple users 1`] = `
+Object {
+  "data": Object {
+    "users": Array [
+      Object {
+        "email": "teste@email.com",
+        "firstName": "teste1",
+        "id": "61c3cec6-8ea8-435e-b124-6a238a9fe7af",
+        "lastName": "teste last",
+      },
+      Object {
+        "email": "teste2@email.com",
+        "firstName": "teste2",
+        "id": "35bafc2a-cfe8-44e9-8dde-ff298f939e21",
+        "lastName": "teste2 last",
+      },
+    ],
   },
   "errors": undefined,
   "extensions": undefined,

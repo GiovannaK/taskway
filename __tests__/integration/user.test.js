@@ -3,12 +3,54 @@ const {
   CONFIRM_ACCOUNT,
   LOGIN_USER,
   FORGOT_PASSWORD,
-  RESET_PASSWORD} = require('../graphqlQueries/userQueries')
+  RESET_PASSWORD,
+  USERS} = require('../graphqlQueries/userQueries')
 const server = require('../../src/server');
 const {createTestClient} = require('apollo-server-testing')
 const truncate = require('../utils/truncate')
 const {User, Profile} = require('../../src/models')
 const bcrypt = require('bcryptjs')
+
+describe('Query users', () => {
+  beforeEach(async () => {
+    await truncate();
+  })
+
+  it('Should return multiple users', async () => {
+    const password = "testando"
+
+    const encryptedPassword = bcrypt.hashSync(password, 6)
+
+    const users = [
+      {
+        firstName: "teste1",
+        lastName: "teste last",
+        email: "teste@email.com",
+        password: encryptedPassword,
+        emailConfirmationToken: 'a783hd842fk3209akdfe09430',
+        emailConfirmationExpires: Date.now() + 10 * (60 * 1000)
+      },
+      {
+        firstName: "teste2",
+        lastName: "teste2 last",
+        email: "teste2@email.com",
+        password: encryptedPassword,
+        emailConfirmationToken: 'd637fr7ghu34jedk484i8389',
+        emailConfirmationExpires: Date.now() + 10 * (60 * 1000)
+      }
+    ]
+
+    await User.bulkCreate(users)
+
+    const {query} = createTestClient(serverTest);
+    const res = await query({
+      query: USERS
+    })
+
+    expect(res).toMatchSnapshot();
+
+  })
+})
 
 describe('Authentication flux', () => {
   beforeEach(async () => {

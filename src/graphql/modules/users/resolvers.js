@@ -137,7 +137,7 @@ module.exports = {
     },
     userForgotPassword: async (_, {email}) => {
       try {
-        const user = await User.findOne({email})
+        const user = await User.findOne({where: {email}})
 
         if(!user){
           throw new UserInputError('Cannot found user')
@@ -152,7 +152,7 @@ module.exports = {
 
     userResetPassword: async (_, {passwordResetToken, password}) => {
       try {
-        const user = await User.findOne({passwordResetToken})
+        const user = await User.findOne({where: {passwordResetToken}})
 
         if(!user){
           throw new Error('User not exist')

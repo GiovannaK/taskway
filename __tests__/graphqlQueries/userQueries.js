@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql } = require('apollo-server-express');
 
 exports.CREATE_USER = gql`
   mutation UserRegister($firstName: String!, $lastName: String!, $email: String!, $password: String!){
@@ -8,6 +8,17 @@ exports.CREATE_USER = gql`
       lastName
       email
       emailConfirmationToken
+    }
+  }
+`
+
+exports.USERS = gql`
+  query Users{
+    users{
+      id
+      firstName
+      lastName
+      email
     }
   }
 `
