@@ -4,7 +4,7 @@ const {Profile} = require('../../../models');
 const auth = require('../../../middlewares/auth');
 
 
-let processUpload = async(file, id, context) => {
+let processUpload = async(file, context) => {
   try {
     auth(context)
     const {createReadStream, filename, mimetype, encoding} = await file
@@ -15,7 +15,8 @@ let processUpload = async(file, id, context) => {
       ContentType: mimetype
     }).promise();
 
-    const profile = await Profile.findByPk(id)
+    const {userId} = context.req
+    const profile = await Profile.findOne({where: {userId}})
 
     if(!profile){
       throw new Error('Profile not exist')
@@ -40,7 +41,6 @@ let processUpload = async(file, id, context) => {
       }
     })
   } catch (error) {
-    console.log(error);
     throw error
   }
 }
@@ -57,19 +57,36 @@ module.exports = {
         if(!profile){
           throw new Error('Cannot find user')
         }
-        console.log('USER', profile);
 
         return profile
 
       } catch (error) {
-        console.log(error);
         throw new Error('Cannot show profile')
       }
     }
   },
   Mutation: {
     singleUpload: async(_, args, context) => {
-      return processUpload(args.file, args.id, context)
+      return processUpload(args.file, context)
     },
+    updateBio: async(_, {bio}, context) => {
+      try {
+        auth(context);
+        const {userId} = context.req
+
+        const profile = await Profile.findOne({where: {userId}})
+
+        if(!profile){
+          throw new Error('Cannot find profile')
+        }
+        profile.bio = bio
+
+        await profile.save()
+
+        return profile
+      } catch (error) {
+        throw error
+      }
+    }
   }
 }

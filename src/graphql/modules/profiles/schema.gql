@@ -16,10 +16,8 @@ type Query {
 }
 
 type Mutation {
-  singleUpload(file: Upload!, id: ID!): Profile,
+  singleUpload(file: Upload!): Profile,
+  updateBio(bio: String): Profile!
 }
 
-input ProfileInput {
-  bio: String!
-}
 
