@@ -1,14 +1,18 @@
-
 type Profile {
   id: ID!
   imageUrl: String
   filename: String
   mimetype: String
   encoding: String
-  bio: String!
-  userId: User!
+  bio: String
+  userId: ID!
   createdAt: String!
   updatedAt: String!
+}
+
+type Query {
+  profiles: [Profile!]!
+  profile: Profile!
 }
 
 type Mutation {

@@ -4,6 +4,7 @@ const sendRegistrationEmail = require('./sendRegistrationEmail');
 const sendForgotPasswordEmail = require('./sendForgotPasswordEmail');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const auth = require('../../../middlewares/auth');
 
 module.exports = {
   Query: {
@@ -21,9 +22,10 @@ module.exports = {
       }
     },
 
-    user: async (_, {id}) => {
+    user: async (_,__, context) => {
       try {
-        const user = await User.findByPk(id)
+        auth(context)
+        const user = await User.findByPk(context.req.userId)
 
         if(!user){
           throw new Error('Cannot found user')

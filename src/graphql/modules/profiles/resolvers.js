@@ -6,7 +6,6 @@ const auth = require('../../../middlewares/auth');
 
 let processUpload = async(file, id, context) => {
   try {
-    console.log('>>>', console.log(file))
     auth(context)
     const {createReadStream, filename, mimetype, encoding} = await file
     const stream = await createReadStream()
@@ -48,9 +47,29 @@ let processUpload = async(file, id, context) => {
 
 
 module.exports = {
+  Query: {
+    profile: async(_, __, context) => {
+      try {
+        auth(context);
+        const {userId} = context.req
+        const profile = await Profile.findOne({where: {userId}})
+
+        if(!profile){
+          throw new Error('Cannot find user')
+        }
+        console.log('USER', profile);
+
+        return profile
+
+      } catch (error) {
+        console.log(error);
+        throw new Error('Cannot show profile')
+      }
+    }
+  },
   Mutation: {
     singleUpload: async(_, args, context) => {
       return processUpload(args.file, args.id, context)
-    }
+    },
   }
 }
