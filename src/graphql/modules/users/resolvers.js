@@ -83,7 +83,11 @@ module.exports = {
         const userAlreadyExists = await User.findOne({ where: { email } });
 
         if (userAlreadyExists) {
-          throw new UserInputError('User already exist');
+          throw new UserInputError('Usuário já existe');
+        }
+
+        if (password.length < 8) {
+          throw new UserInputError('Password must have at least 8 characters');
         }
 
         const encryptedPassword = bcrypt.hashSync(password, 6);
@@ -96,7 +100,7 @@ module.exports = {
         return userData;
       } catch (error) {
         console.log(error);
-        throw new UserInputError('Bad Input');
+        throw new UserInputError('Bad Input', { error });
       }
     },
 
@@ -117,9 +121,6 @@ module.exports = {
         user.isVerified = true;
         user.emailConfirmationExpires = null;
         user.emailConfirmationToken = null;
-
-        console.log('ID', user.id);
-        console.log('ID TYPE', typeof user.id);
 
         await Profile.create({
           userId: user.id,

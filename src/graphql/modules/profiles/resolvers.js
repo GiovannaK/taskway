@@ -1,5 +1,6 @@
 /* eslint-disable prefer-promise-reject-errors */
 const { v4: uuid } = require('uuid');
+const { UserInputError } = require('apollo-server-express');
 const s3 = require('../../../modules/s3');
 const { Profile } = require('../../../models');
 const auth = require('../../../middlewares/auth');
@@ -7,9 +8,19 @@ const auth = require('../../../middlewares/auth');
 const processUpload = async (file, context) => {
   try {
     auth(context);
+
+    if (!file) {
+      throw new UserInputError('Please upload an image');
+    }
+
     const {
       createReadStream, filename, mimetype, encoding,
     } = await file;
+
+    if (!(mimetype === 'image/png' || mimetype === 'image/jpeg' || mimetype === 'image/jpg')) {
+      return new UserInputError('Please, Provide correct image type');
+    }
+
     const stream = await createReadStream();
     const { Location } = await s3.upload({
       Body: stream,
@@ -77,6 +88,11 @@ module.exports = {
         if (!profile) {
           throw new Error('Cannot find profile');
         }
+
+        if (bio.length < 1) {
+          throw new UserInputError('Bio must have at least 1 character');
+        }
+
         profile.bio = bio;
 
         await profile.save();
