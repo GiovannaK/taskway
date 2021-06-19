@@ -1,0 +1,17 @@
+type Workspace {
+  id: ID!
+  title: String!
+  ownerId: ID!
+  createdAt: String!
+  updatedAt: String!
+}
+
+
+type Query {
+  workspaces: [Workspace!]!
+  workspace: Workspace!
+}
+
+type Mutation {
+  createWorkspace(title: String!): Workspace!
+}
