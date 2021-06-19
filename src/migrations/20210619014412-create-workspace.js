@@ -1,28 +1,24 @@
 /* eslint-disable no-unused-vars */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Profiles', {
+    await queryInterface.createTable('Workspaces', {
       id: {
         allowNull: false,
-        type: Sequelize.UUID,
-        primaryKey: true,
         defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        type: Sequelize.UUID,
       },
-      userId: {
+      title: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      ownerId: {
         type: Sequelize.UUID,
         allowNull: false,
         defaultValue: Sequelize.UUIDV4,
         references: { model: 'Users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-      },
-      imageUrl: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      bio: {
-        type: Sequelize.STRING,
-        allowNull: true,
       },
       createdAt: {
         allowNull: false,
@@ -35,6 +31,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Profiles');
+    await queryInterface.dropTable('Workspaces');
   },
 };
