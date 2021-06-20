@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ Profile, Workspace }) {
       this.hasOne(Profile, { foreignKey: 'userId', as: 'profile' });
       this.hasMany(Workspace, { foreignKey: 'ownerId', as: 'workspaces' });
+      this.belongsToMany(Workspace, { foreignKey: 'userId', through: 'User_Workspaces', as: 'users_workspaces' });
     }
   }
   User.init({

@@ -6,6 +6,11 @@ type Workspace {
   updatedAt: String!
 }
 
+type User_Workspaces {
+  userId: ID!
+  workspaceId: ID!
+}
+
 
 type Query {
   workspaces: [Workspace!]!
@@ -14,4 +19,5 @@ type Query {
 
 type Mutation {
   createWorkspace(title: String!): Workspace!
+  addUserToWorkspace(workspaceId: ID!, userId: ID!): User_Workspaces!
 }

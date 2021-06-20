@@ -1,41 +1,40 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
 const {
   Model,
 } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Workspace extends Model {
+  class User_Workspaces extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ User }) {
-      this.belongsTo(User, { foreignKey: 'ownerId', as: 'owner' });
-      this.belongsToMany(User, { foreignKey: 'workspaceId', through: 'User_Workspaces', as: 'users' });
+    static associate(models) {
+      // define association here
     }
   }
-  Workspace.init({
+  User_Workspaces.init({
     id: {
+      type: DataTypes.UUID,
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      type: DataTypes.UUID,
     },
-    title: {
-      unique: true,
-      type: DataTypes.STRING,
+    userId: {
+      type: DataTypes.UUID,
       allowNull: false,
-      validate: {
-        len: {
-          args: [1, 255],
-          msg: 'Title must have at least 1 character',
-        },
-      },
+      defaultValue: DataTypes.UUIDV4,
+    },
+    workspaceId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
     },
   }, {
     sequelize,
-    modelName: 'Workspace',
+    modelName: 'User_Workspaces',
   });
-  return Workspace;
+  return User_Workspaces;
 };
