@@ -57,5 +57,37 @@ module.exports = {
         throw new Error('Cannot add User to workspace', { error });
       }
     },
+    removeUserFromWorkspace: async (_, args, context) => {
+      try {
+        auth(context);
+        const { userId } = context.req;
+        const { workspaceId } = args;
+
+        const invitedUser = args.userId;
+
+        const workspace = await Workspace.findOne({
+          where: {
+            id: workspaceId,
+            ownerId: userId,
+          },
+        });
+
+        if (!workspace) {
+          throw new Error('Cannot found workspace');
+        }
+
+        const removedUser = await User_Workspaces.destroy({
+          where: {
+            userId: invitedUser,
+            workspaceId: workspace.id,
+          },
+        });
+
+        return !!removedUser;
+      } catch (error) {
+        console.log(error);
+        throw new Error('Cannot delete user from workspace', { error });
+      }
+    },
   },
 };

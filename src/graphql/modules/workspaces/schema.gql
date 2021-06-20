@@ -20,4 +20,5 @@ type Query {
 type Mutation {
   createWorkspace(title: String!): Workspace!
   addUserToWorkspace(workspaceId: ID!, userId: ID!): User_Workspaces!
+  removeUserFromWorkspace(workspaceId: ID!, userId: ID!): Boolean
 }
