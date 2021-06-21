@@ -14,7 +14,8 @@ type User_Workspaces {
 
 type Query {
   workspaces: [Workspace!]!
-  workspace: Workspace!
+  workspace(id: ID!): Workspace!
+  usersWorkspace(id: ID!): [User]
 }
 
 type Mutation {

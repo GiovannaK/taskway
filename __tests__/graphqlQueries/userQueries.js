@@ -10,7 +10,7 @@ exports.CREATE_USER = gql`
       emailConfirmationToken
     }
   }
-`
+`;
 
 exports.USERS = gql`
   query Users{
@@ -21,7 +21,7 @@ exports.USERS = gql`
       email
     }
   }
-`
+`;
 
 exports.CONFIRM_ACCOUNT = gql`
   mutation UserConfirmAccount($emailConfirmationToken: String!){
@@ -31,7 +31,7 @@ exports.CONFIRM_ACCOUNT = gql`
       isVerified
     }
   }
-`
+`;
 
 exports.LOGIN_USER = gql`
   mutation UserLogin($email: String!, $password: String!){
@@ -40,7 +40,7 @@ exports.LOGIN_USER = gql`
       token
     }
   }
-`
+`;
 
 exports.FORGOT_PASSWORD = gql`
   mutation userForgotPassword($email: String!){
@@ -49,7 +49,7 @@ exports.FORGOT_PASSWORD = gql`
       passwordResetToken
     }
   }
-`
+`;
 
 exports.RESET_PASSWORD = gql`
   mutation UserResetPassword($passwordResetToken: String!, $password: String!){
@@ -58,4 +58,4 @@ exports.RESET_PASSWORD = gql`
       email
     }
   }
-`
+`;

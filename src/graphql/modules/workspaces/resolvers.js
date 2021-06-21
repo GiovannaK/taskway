@@ -5,6 +5,49 @@ const { User_Workspaces, Workspace } = require('../../../models');
 
 /* eslint-disable no-unused-vars */
 module.exports = {
+  Query: {
+    workspaces: async (_, __, context) => {
+      try {
+        auth(context);
+        const { userId } = context.req;
+        const workspaces = await Workspace.findAll({
+          where: {
+            ownerId: userId,
+          },
+        });
+
+        return workspaces;
+      } catch (error) {
+        throw new Error('Cannot found Workspaces for this user', { error });
+      }
+    },
+    workspace: async (_, { id }, context) => {
+      try {
+        auth(context);
+        const workspace = await Workspace.findByPk(id);
+
+        return workspace;
+      } catch (error) {
+        throw new Error('Cannot find workspace', { error });
+      }
+    },
+    usersWorkspace: async (_, { id }, context) => {
+      try {
+        auth(context);
+
+        const workspace = await Workspace.findByPk(id, {
+          include: {
+            association: 'users',
+          },
+        });
+
+        return workspace.users;
+      } catch (error) {
+        console.log(error);
+        throw new Error('Cannot show users for this workspace', { error });
+      }
+    },
+  },
   Mutation: {
     createWorkspace: async (_, { title }, context) => {
       try {
