@@ -4,19 +4,17 @@ const {
 } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Workspace extends Model {
+  class Task extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ User, Task }) {
-      this.belongsTo(User, { foreignKey: 'ownerId', as: 'owner' });
-      this.belongsToMany(User, { foreignKey: 'workspaceId', through: 'User_Workspaces', as: 'users' });
-      this.hasMany(Task, { foreignKey: 'workspaceId', as: 'tasks' });
+    static associate({ Workspace }) {
+      this.belongsTo(Workspace, { foreignKey: 'workspaceId', as: 'task_workspaces' });
     }
   }
-  Workspace.init({
+  Task.init({
     id: {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
@@ -24,19 +22,35 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
     },
     title: {
-      unique: true,
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    link: {
+      type: DataTypes.STRING,
+    },
+    file: {
+      type: DataTypes.STRING,
+    },
+    description: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         len: {
-          args: [1, 255],
-          msg: 'Title must have at least 1 character',
+          args: [1, 1000],
+          msg: 'Max size allowed is 1000 characters',
         },
+
       },
+    },
+    maxDate: {
+      type: DataTypes.DATE,
+    },
+    progress: {
+      type: DataTypes.ENUM('Not started', 'In progress', 'finished'),
     },
   }, {
     sequelize,
-    modelName: 'Workspace',
+    modelName: 'Task',
   });
-  return Workspace;
+  return Task;
 };
