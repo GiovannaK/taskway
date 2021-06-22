@@ -1,0 +1,26 @@
+type Task {
+  id: ID!
+  title: String!
+  workspaceId: ID!
+  link: String
+  file: String
+  description: String!
+  filename: String
+  mimetype: String
+  encoding: String
+  progress: String
+  maxDate: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+
+type Mutation {
+  createTask(
+    title: String!
+    workspaceId: ID!
+    link: String
+    maxDate: String
+    description: String!
+  ): Task!
+}
