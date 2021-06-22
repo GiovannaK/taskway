@@ -44,6 +44,21 @@ module.exports = {
         throw new ApolloError('Cannot show tasks for this workspace');
       }
     },
+
+    task: async (_, { id }, context) => {
+      try {
+        auth(context);
+
+        const task = await Task.findByPk(id);
+
+        if (!task) return null;
+
+        return task;
+      } catch (error) {
+        console.log(error);
+        throw new ApolloError('Cannot show task');
+      }
+    },
   },
   Mutation: {
     createTask: async (_, {

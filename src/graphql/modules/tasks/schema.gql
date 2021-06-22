@@ -15,7 +15,8 @@ type Task {
 }
 
 type Query {
-  tasks(workspaceId: ID!): [Task!]!
+  tasks(workspaceId: ID!): [Task!]
+  task(id: ID!): Task
 }
 
 type Mutation {
