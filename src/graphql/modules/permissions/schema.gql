@@ -1,0 +1,18 @@
+type Permission {
+  id: ID!
+  name: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type User_Permissions {
+  id: ID!
+  userId: ID!
+  permissionId: ID!
+  workspaceId: ID!
+}
+
+type Mutation {
+  addUserPermission(permissionId: ID!, userId: ID!, workspaceId: ID!): User_Permissions!
+  removeUserPermission(permissionId: ID!, userId: ID!, workspaceId: ID!): Boolean
+}
