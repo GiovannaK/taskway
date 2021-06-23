@@ -1,14 +1,24 @@
 /* eslint-disable camelcase */
 const { ApolloError, AuthenticationError } = require('apollo-server-errors');
 const auth = require('../../../middlewares/auth');
-const { Task, Workspace, User_Workspaces } = require('../../../models');
+const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
+const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
+const { Task, Workspace } = require('../../../models');
 
 module.exports = {
   Query: {
     tasks: async (_, { workspaceId }, context) => {
       try {
         auth(context);
-        const { userId } = context.req;
+
+        const owner = await isWorkspaceOwner(workspaceId, context);
+        console.log('Owner', owner);
+        const workspaceMember = await isWorkspaceMember(workspaceId, context);
+        console.log('Member', workspaceMember);
+
+        if (!owner && !workspaceMember) {
+          return {};
+        }
 
         const workspace = await Workspace.findOne({
           where: {
@@ -20,7 +30,7 @@ module.exports = {
           throw new ApolloError('Workspace not exist');
         }
 
-        const canViewTask = await User_Workspaces.findOne({
+        /* const canViewTask = await User_Workspaces.findOne({
           where: {
             workspaceId,
             userId,
@@ -32,7 +42,7 @@ module.exports = {
             'You are not authorized to see tasks in this workspace',
           );
         }
-
+ */
         const tasks = await Task.findAll({
           where: {
             workspaceId,
