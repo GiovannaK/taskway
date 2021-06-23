@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
-const { UserInputError } = require('apollo-server-errors');
+const { UserInputError, ForbiddenError } = require('apollo-server-errors');
 const auth = require('../../../middlewares/auth');
+const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
+const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
 const { User_Workspaces, Workspace } = require('../../../models');
 
 /* eslint-disable no-unused-vars */
@@ -24,6 +26,12 @@ module.exports = {
     workspace: async (_, { id }, context) => {
       try {
         auth(context);
+        const owner = await isWorkspaceOwner(id, context);
+        const workspaceMember = await isWorkspaceMember(id, context);
+
+        if (!owner && !workspaceMember) {
+          throw new ForbiddenError('Not authorized to see workspace');
+        }
         const workspace = await Workspace.findByPk(id);
 
         return workspace;
@@ -34,6 +42,13 @@ module.exports = {
     usersWorkspace: async (_, { id }, context) => {
       try {
         auth(context);
+
+        const owner = await isWorkspaceOwner(id, context);
+        const workspaceMember = await isWorkspaceMember(id, context);
+
+        if (!owner && !workspaceMember) {
+          throw new ForbiddenError('Not authorized to see workspace');
+        }
 
         const workspace = await Workspace.findByPk(id, {
           include: {

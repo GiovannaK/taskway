@@ -1,4 +1,4 @@
-const { ApolloError, ForbiddenError } = require('apollo-server-errors');
+const { ApolloError } = require('apollo-server-errors');
 const { Workspace } = require('../models');
 
 const isWorkspaceOwner = async (workspaceId, context) => {
@@ -12,9 +12,7 @@ const isWorkspaceOwner = async (workspaceId, context) => {
     }
 
     if (workspace.ownerId !== userId) {
-      throw new ForbiddenError(
-        'Uanuthorized, you must be workspace owner to execute this action',
-      );
+      return false;
     }
 
     return true;

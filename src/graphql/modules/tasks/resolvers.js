@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { ApolloError, AuthenticationError } = require('apollo-server-errors');
+const { ApolloError, AuthenticationError, ForbiddenError } = require('apollo-server-errors');
 const auth = require('../../../middlewares/auth');
 const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
 const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
@@ -10,39 +10,12 @@ module.exports = {
     tasks: async (_, { workspaceId }, context) => {
       try {
         auth(context);
-
         const owner = await isWorkspaceOwner(workspaceId, context);
-        console.log('Owner', owner);
         const workspaceMember = await isWorkspaceMember(workspaceId, context);
-        console.log('Member', workspaceMember);
 
         if (!owner && !workspaceMember) {
-          return {};
+          throw new ForbiddenError('Not authorized to see tasks');
         }
-
-        const workspace = await Workspace.findOne({
-          where: {
-            id: workspaceId,
-          },
-        });
-
-        if (!workspace) {
-          throw new ApolloError('Workspace not exist');
-        }
-
-        /* const canViewTask = await User_Workspaces.findOne({
-          where: {
-            workspaceId,
-            userId,
-          },
-        });
-
-        if (!canViewTask && userId !== workspace.ownerId) {
-          throw new AuthenticationError(
-            'You are not authorized to see tasks in this workspace',
-          );
-        }
- */
         const tasks = await Task.findAll({
           where: {
             workspaceId,
@@ -52,21 +25,6 @@ module.exports = {
         return tasks;
       } catch (error) {
         throw new ApolloError('Cannot show tasks for this workspace');
-      }
-    },
-
-    task: async (_, { id }, context) => {
-      try {
-        auth(context);
-
-        const task = await Task.findByPk(id);
-
-        if (!task) return null;
-
-        return task;
-      } catch (error) {
-        console.log(error);
-        throw new ApolloError('Cannot show task');
       }
     },
   },
