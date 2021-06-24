@@ -37,5 +37,33 @@ module.exports = {
         throw new ApolloError('Cannot add permission for this user');
       }
     },
+    removeUserPermission: async (_, { permissionId, userId, workspaceId }, context) => {
+      try {
+        auth(context);
+        const loggedUser = context.req.userId;
+        const owner = await isWorkspaceOwner(workspaceId, loggedUser);
+        if (!owner) {
+          throw new ForbiddenError('Unauthorized to add permissions in this workspace');
+        }
+        const workspaceMember = await isWorkspaceMember(workspaceId, userId);
+
+        if (!workspaceMember) {
+          throw new ForbiddenError('User is not part of workspace');
+        }
+
+        const removedPermission = await User_Permissions.destroy({
+          where: {
+            userId,
+            permissionId,
+            workspaceId,
+          },
+        });
+
+        return !!removedPermission;
+      } catch (error) {
+        console.log(error);
+        throw new ApolloError('Cannot remove this permission');
+      }
+    },
   },
 };
