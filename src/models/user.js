@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 const crypto = require('crypto');
 const {
   Model,
