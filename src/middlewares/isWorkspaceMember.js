@@ -2,9 +2,9 @@
 const { ApolloError } = require('apollo-server-errors');
 const { User_Workspaces } = require('../models');
 
-const isWorkspaceMember = async (workspaceId, context) => {
+const isWorkspaceMember = async (workspaceId, userId) => {
   try {
-    const { userId } = context.req;
+    /* const { userId } = context.req; */
 
     const userWorkspace = await User_Workspaces.findOne({
       where: {

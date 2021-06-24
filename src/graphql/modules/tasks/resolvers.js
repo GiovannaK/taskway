@@ -10,8 +10,9 @@ module.exports = {
     tasks: async (_, { workspaceId }, context) => {
       try {
         auth(context);
-        const owner = await isWorkspaceOwner(workspaceId, context);
-        const workspaceMember = await isWorkspaceMember(workspaceId, context);
+        const { userId } = context.req;
+        const owner = await isWorkspaceOwner(workspaceId, userId);
+        const workspaceMember = await isWorkspaceMember(workspaceId, userId);
 
         if (!owner && !workspaceMember) {
           throw new ForbiddenError('Not authorized to see tasks');

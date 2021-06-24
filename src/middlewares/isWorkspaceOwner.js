@@ -1,9 +1,9 @@
 const { ApolloError } = require('apollo-server-errors');
 const { Workspace } = require('../models');
 
-const isWorkspaceOwner = async (workspaceId, context) => {
+const isWorkspaceOwner = async (workspaceId, userId) => {
   try {
-    const { userId } = context.req;
+    /* const { userId } = context.req; */
 
     const workspace = await Workspace.findByPk(workspaceId);
 

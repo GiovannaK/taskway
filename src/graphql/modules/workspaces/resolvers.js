@@ -26,8 +26,9 @@ module.exports = {
     workspace: async (_, { id }, context) => {
       try {
         auth(context);
-        const owner = await isWorkspaceOwner(id, context);
-        const workspaceMember = await isWorkspaceMember(id, context);
+        const { userId } = context.req;
+        const owner = await isWorkspaceOwner(id, userId);
+        const workspaceMember = await isWorkspaceMember(id, userId);
 
         if (!owner && !workspaceMember) {
           throw new ForbiddenError('Not authorized to see workspace');
@@ -42,9 +43,9 @@ module.exports = {
     usersWorkspace: async (_, { id }, context) => {
       try {
         auth(context);
-
-        const owner = await isWorkspaceOwner(id, context);
-        const workspaceMember = await isWorkspaceMember(id, context);
+        const { userId } = context.req;
+        const owner = await isWorkspaceOwner(id, userId);
+        const workspaceMember = await isWorkspaceMember(id, userId);
 
         if (!owner && !workspaceMember) {
           throw new ForbiddenError('Not authorized to see workspace');
