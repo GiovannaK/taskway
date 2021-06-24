@@ -6,7 +6,7 @@ type Permission {
 }
 
 type User_Permissions {
-  id: ID!
+  id: ID! 
   userId: ID!
   permissionId: ID!
   workspaceId: ID!
