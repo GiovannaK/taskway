@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate() {
-      /* this.belongsToMany(Permission, { foreignKey: 'userId', through: 'User_Permissions', as: 'users_permissions' }); */
+    static associate({ Permission }) {
+      this.belongsToMany(Permission, { foreignKey: 'userId', through: 'User_Permissions', as: 'users_permissions' });
     }
   }
   User_Workspaces.init({
