@@ -112,6 +112,7 @@ module.exports = {
 
         return addedUser;
       } catch (error) {
+        console.log(error);
         throw new Error('Cannot add User to workspace', { error });
       }
     },
