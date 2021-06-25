@@ -89,6 +89,12 @@ module.exports = {
         const { workspaceId } = args;
         const invitedUser = args.userId;
 
+        const owner = await isWorkspaceOwner(workspaceId, userId);
+
+        if (!owner) {
+          throw new ForbiddenError('Not authorized add users to this workspace');
+        }
+
         const workspace = await Workspace.findOne({
           where: {
             id: workspaceId,
@@ -124,6 +130,12 @@ module.exports = {
         const { workspaceId } = args;
 
         const invitedUser = args.userId;
+
+        const owner = await isWorkspaceOwner(workspaceId, userId);
+
+        if (!owner) {
+          throw new ForbiddenError('Not authorized to delete users from this workspace');
+        }
 
         const workspace = await Workspace.findOne({
           where: {
