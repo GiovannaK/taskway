@@ -127,8 +127,7 @@ module.exports = {
 
         return task;
       } catch (error) {
-        console.log(error);
-        throw new ApolloError('Cannot create task');
+        throw new ApolloError('Cannot update task');
       }
     },
   },
