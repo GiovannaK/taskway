@@ -9,9 +9,14 @@ const auth = require('../../../middlewares/auth');
 
 module.exports = {
   Query: {
-    users: async (_, __) => {
+    users: async (_, __, context) => {
       try {
-        const user = await User.findAll();
+        auth(context);
+        const user = await User.findAll({
+          where: {
+            isVerified: true,
+          },
+        });
 
         if (!user) {
           throw new Error('Users does not exists');
