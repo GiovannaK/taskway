@@ -1,10 +1,79 @@
+/* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable camelcase */
-const { ApolloError, ForbiddenError } = require('apollo-server-errors');
+const { ApolloError, ForbiddenError, UserInputError } = require('apollo-server-errors');
+const { v4: uuid } = require('uuid');
 const auth = require('../../../middlewares/auth');
 const checkPermission = require('../../../middlewares/checkPermission');
 const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
 const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
 const { Task, Workspace, Permission } = require('../../../models');
+const s3 = require('../../../modules/s3');
+
+const processUpload = async (file, id, workspaceId, context) => {
+  try {
+    auth(context);
+
+    const { userId } = context.req;
+    const task = await Task.findByPk(id);
+
+    if (!task) {
+      throw new ApolloError('Cannot found task');
+    }
+
+    const getPermission = await Permission.findOne({
+      where: {
+        name: 'updateTask',
+      },
+    });
+
+    if (!getPermission) {
+      throw new ApolloError('Cannot find permission');
+    }
+
+    const owner = await isWorkspaceOwner(workspaceId, userId);
+    const userWorkspaceHasPerm = await checkPermission(userId, workspaceId, getPermission.id);
+
+    if (!owner && !userWorkspaceHasPerm) {
+      throw new ForbiddenError('Unauthorized to update task in this workspace');
+    }
+
+    if (!file) {
+      throw new UserInputError('Please upload a file');
+    }
+
+    const {
+      createReadStream, filename, mimetype, encoding,
+    } = await file;
+
+    const stream = await createReadStream();
+    const { Location } = await s3.upload({
+      Body: stream,
+      Key: `${uuid()}${filename}`,
+      ContentType: mimetype,
+    }).promise();
+
+    task.file = Location;
+
+    await task.save();
+
+    return new Promise((resolve, reject) => {
+      if (Location) {
+        resolve({
+          mimetype,
+          filename,
+          encoding,
+          imageUrl: Location,
+        });
+      } else {
+        reject({
+          message: 'Upload failed',
+        });
+      }
+    });
+  } catch (error) {
+    throw error;
+  }
+};
 
 module.exports = {
   Query: {
@@ -170,5 +239,8 @@ module.exports = {
         throw new ApolloError('Cannot delete task');
       }
     },
+    taskSingleUpload: async (_, args, context) => processUpload(
+      args.file, args.id, args.workspaceId, context,
+    ),
   },
 };
