@@ -34,4 +34,5 @@ type Mutation {
     maxDate: String
     description: String!
   ): Task!
+  deleteTask(id: ID!, workspaceId: ID!): Boolean
 }

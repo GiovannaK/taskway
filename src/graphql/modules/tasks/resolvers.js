@@ -130,5 +130,45 @@ module.exports = {
         throw new ApolloError('Cannot update task');
       }
     },
+    deleteTask: async (_, { id, workspaceId }, context) => {
+      try {
+        auth(context);
+        const { userId } = context.req;
+
+        const workspace = await Workspace.findByPk(workspaceId);
+
+        if (!workspace) {
+          throw new ApolloError('Cannot found workspace');
+        }
+
+        const getPermission = await Permission.findOne({
+          where: {
+            name: 'deleteTask',
+          },
+        });
+
+        if (!getPermission) {
+          throw new ApolloError('Cannot find permission');
+        }
+
+        const owner = await isWorkspaceOwner(workspaceId, userId);
+        const userWorkspaceHasPerm = await checkPermission(userId, workspaceId, getPermission.id);
+
+        if (!owner && !userWorkspaceHasPerm) {
+          throw new ForbiddenError('Unauthorized to delete task in this workspace');
+        }
+
+        const task = await Task.findByPk(id);
+
+        if (!task) throw new ApolloError('Cannot delete task, Task not exist');
+
+        await task.destroy();
+
+        return !!task;
+      } catch (error) {
+        console.log(error);
+        throw new ApolloError('Cannot delete task');
+      }
+    },
   },
 };
