@@ -6,10 +6,14 @@ type Permission {
 }
 
 type User_Permissions {
-  id: ID! 
+  id: ID!
   userId: ID!
   permissionId: ID!
   workspaceId: ID!
+}
+
+type Query {
+  userPermissionsByWorkspace(workspaceId: ID!): [User_Permissions]
 }
 
 type Mutation {

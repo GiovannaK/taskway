@@ -4,9 +4,40 @@ const { ForbiddenError, ApolloError, UserInputError } = require('apollo-server-e
 const auth = require('../../../middlewares/auth');
 const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
 const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
-const { Permission, User_Permissions, User_Workspaces } = require('../../../models');
+const { User_Permissions, Workspace } = require('../../../models');
 
 module.exports = {
+  Query: {
+    userPermissionsByWorkspace: async (_, { workspaceId }, context) => {
+      try {
+        auth(context);
+        const { userId } = context.req;
+
+        const owner = await isWorkspaceOwner(workspaceId, userId);
+
+        const permissions = await Workspace.findByPk(workspaceId, {
+          include: {
+            association: 'workspaces_permissions',
+            where: {
+              userId,
+            },
+          },
+        });
+
+        if (!permissions && !owner) {
+          throw new ForbiddenError('You do not have any special permission in this workspace');
+        }
+
+        if (owner) {
+          return [];
+        }
+
+        return permissions.workspaces_permissions;
+      } catch (error) {
+        throw new ApolloError('Cannot show logged user permissions in this workspace');
+      }
+    },
+  },
   Mutation: {
     addUserPermission: async (_, { permissionId, userId, workspaceId }, context) => {
       try {
