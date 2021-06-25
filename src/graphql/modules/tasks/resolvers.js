@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
-const { ApolloError, AuthenticationError, ForbiddenError } = require('apollo-server-errors');
+const { ApolloError, ForbiddenError } = require('apollo-server-errors');
 const auth = require('../../../middlewares/auth');
+const checkPermission = require('../../../middlewares/checkPermission');
 const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
 const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
-const { Task, Workspace } = require('../../../models');
+const { Task, Workspace, Permission } = require('../../../models');
 
 module.exports = {
   Query: {
@@ -17,6 +18,7 @@ module.exports = {
         if (!owner && !workspaceMember) {
           throw new ForbiddenError('Not authorized to see tasks');
         }
+
         const tasks = await Task.findAll({
           where: {
             workspaceId,
@@ -47,8 +49,21 @@ module.exports = {
           throw new ApolloError('Cannot found workspace');
         }
 
-        if (userId !== workspace.ownerId) {
-          throw new AuthenticationError('Unauthorized to create tasks');
+        const getPermission = await Permission.findOne({
+          where: {
+            name: 'createTask',
+          },
+        });
+
+        if (!getPermission) {
+          throw new ApolloError('Cannot find permission');
+        }
+
+        const owner = await isWorkspaceOwner(workspaceId, userId);
+        const userWorkspaceHasPerm = await checkPermission(userId, workspaceId, getPermission.id);
+
+        if (!owner && !userWorkspaceHasPerm) {
+          throw new ForbiddenError('Unauthorized to create task in this workspace');
         }
 
         const task = await Task.create({
