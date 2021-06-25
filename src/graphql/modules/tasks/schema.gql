@@ -26,4 +26,12 @@ type Mutation {
     maxDate: String
     description: String!
   ): Task!
+  updateTask(
+    id: ID!
+    title: String!
+    workspaceId: ID!
+    link: String
+    maxDate: String
+    description: String!
+  ): Task!
 }
