@@ -4,10 +4,23 @@ const { ForbiddenError, ApolloError, UserInputError } = require('apollo-server-e
 const auth = require('../../../middlewares/auth');
 const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
 const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
-const { User_Permissions, Workspace } = require('../../../models');
+const { User_Permissions, Workspace, Permission } = require('../../../models');
 
 module.exports = {
   Query: {
+    showPermissions: async (_, __, ___) => {
+      try {
+        const permissions = await Permission.findAll();
+
+        if (!permissions) {
+          return [];
+        }
+
+        return permissions;
+      } catch (error) {
+        throw new ApolloError('Cannot show any permission');
+      }
+    },
     userPermissionsByWorkspace: async (_, { workspaceId }, context) => {
       try {
         auth(context);
