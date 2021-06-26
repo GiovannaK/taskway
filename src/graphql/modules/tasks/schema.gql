@@ -14,10 +14,11 @@ type Task {
   updatedAt: String!
   priority: String
   assignTo: ID!
+  tasksUsers: User
 }
 
 type Query {
-  tasks(workspaceId: ID!): [Task!]
+  tasks(workspaceId: ID!): [Task!]!
 }
 
 type Mutation {

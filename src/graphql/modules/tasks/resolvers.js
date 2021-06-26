@@ -89,8 +89,13 @@ module.exports = {
         }
 
         const tasks = await Task.findAll({
+          raw: true,
+          nest: true,
           where: {
             workspaceId,
+          },
+          include: {
+            association: 'tasksUsers',
           },
         });
 

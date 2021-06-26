@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Workspace, User }) {
       this.belongsTo(Workspace, { foreignKey: 'workspaceId', as: 'task_workspaces' });
-      this.belongsTo(User, { foreignKey: 'assignTo', as: 'tasks_users' });
+      this.belongsTo(User, { foreignKey: 'assignTo', as: 'tasksUsers' });
     }
   }
   Task.init({
