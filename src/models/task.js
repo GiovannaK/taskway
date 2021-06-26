@@ -48,6 +48,9 @@ module.exports = (sequelize, DataTypes) => {
     progress: {
       type: DataTypes.ENUM('Not started', 'In progress', 'finished'),
     },
+    priority: {
+      type: DataTypes.ENUM('Low', 'Medium', 'High'),
+    },
   }, {
     sequelize,
     modelName: 'Task',

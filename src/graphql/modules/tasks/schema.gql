@@ -12,6 +12,7 @@ type Task {
   maxDate: String
   createdAt: String!
   updatedAt: String!
+  priority: String
 }
 
 type Query {
@@ -25,6 +26,7 @@ type Mutation {
     link: String
     maxDate: String
     description: String!
+    priority: String
   ): Task!
   updateTask(
     id: ID!
@@ -33,6 +35,7 @@ type Mutation {
     link: String
     maxDate: String
     description: String!
+    priority: String
     progress: String
   ): Task!
   deleteTask(id: ID!, workspaceId: ID!): Boolean

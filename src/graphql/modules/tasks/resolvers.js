@@ -107,6 +107,7 @@ module.exports = {
       link,
       maxDate,
       description,
+      priority,
     }, context) => {
       try {
         auth(context);
@@ -141,6 +142,7 @@ module.exports = {
           maxDate,
           description,
           workspaceId,
+          priority,
         });
 
         return task;
@@ -156,6 +158,7 @@ module.exports = {
       maxDate,
       description,
       progress,
+      priority,
     }, context) => {
       try {
         auth(context);
@@ -193,6 +196,7 @@ module.exports = {
         task.maxDate = maxDate;
         task.description = description;
         task.progress = progress;
+        task.priority = priority;
 
         await task.save();
 
