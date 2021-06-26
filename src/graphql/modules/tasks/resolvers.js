@@ -155,6 +155,7 @@ module.exports = {
       link,
       maxDate,
       description,
+      progress,
     }, context) => {
       try {
         auth(context);
@@ -191,6 +192,7 @@ module.exports = {
         task.link = link;
         task.maxDate = maxDate;
         task.description = description;
+        task.progress = progress;
 
         await task.save();
 

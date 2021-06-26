@@ -33,6 +33,7 @@ type Mutation {
     link: String
     maxDate: String
     description: String!
+    progress: String
   ): Task!
   deleteTask(id: ID!, workspaceId: ID!): Boolean
   taskSingleUpload(id: ID!, file: Upload!, workspaceId: ID!): Task,
