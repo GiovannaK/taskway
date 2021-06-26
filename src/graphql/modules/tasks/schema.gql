@@ -13,6 +13,7 @@ type Task {
   createdAt: String!
   updatedAt: String!
   priority: String
+  assignTo: ID!
 }
 
 type Query {
@@ -27,6 +28,7 @@ type Mutation {
     maxDate: String
     description: String!
     priority: String
+    assignTo: ID!
   ): Task!
   updateTask(
     id: ID!
@@ -37,6 +39,7 @@ type Mutation {
     description: String!
     priority: String
     progress: String
+    assignTo: ID!
   ): Task!
   deleteTask(id: ID!, workspaceId: ID!): Boolean
   taskSingleUpload(id: ID!, file: Upload!, workspaceId: ID!): Task,

@@ -11,11 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Profile, Workspace, Permission }) {
+    static associate({
+      Profile, Workspace, Permission, Task,
+    }) {
       this.hasOne(Profile, { foreignKey: 'userId', as: 'profile' });
       this.hasMany(Workspace, { foreignKey: 'ownerId', as: 'workspaces' });
       this.belongsToMany(Workspace, { foreignKey: 'userId', through: 'User_Workspaces', as: 'users_workspaces' });
       this.belongsToMany(Permission, { foreignKey: 'userId', through: 'User_Permissions', as: 'users_permissions' });
+      this.hasMany(Task, { foreignKey: 'assignTo', as: 'users_tasks' });
     }
   }
   User.init({

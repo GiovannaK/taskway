@@ -108,6 +108,7 @@ module.exports = {
       maxDate,
       description,
       priority,
+      assignTo,
     }, context) => {
       try {
         auth(context);
@@ -143,6 +144,7 @@ module.exports = {
           description,
           workspaceId,
           priority,
+          assignTo,
         });
 
         return task;
@@ -159,6 +161,7 @@ module.exports = {
       description,
       progress,
       priority,
+      assignTo,
     }, context) => {
       try {
         auth(context);
@@ -197,6 +200,7 @@ module.exports = {
         task.description = description;
         task.progress = progress;
         task.priority = priority;
+        task.assignTo = assignTo;
 
         await task.save();
 
@@ -241,7 +245,6 @@ module.exports = {
 
         return !!task;
       } catch (error) {
-        console.log(error);
         throw new ApolloError('Cannot delete task');
       }
     },

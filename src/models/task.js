@@ -10,8 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Workspace }) {
+    static associate({ Workspace, User }) {
       this.belongsTo(Workspace, { foreignKey: 'workspaceId', as: 'task_workspaces' });
+      this.belongsTo(User, { foreignKey: 'assignTo', as: 'tasks_users' });
     }
   }
   Task.init({
@@ -50,6 +51,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     priority: {
       type: DataTypes.ENUM('Low', 'Medium', 'High'),
+    },
+    assignTo: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
     },
   }, {
     sequelize,
