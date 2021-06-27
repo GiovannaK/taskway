@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
-const { UserInputError } = require('apollo-server-errors');
+const { UserInputError, ApolloError, ForbiddenError } = require('apollo-server-errors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { User, Profile } = require('../../../models');
 const sendRegistrationEmail = require('./sendRegistrationEmail');
 const sendForgotPasswordEmail = require('./sendForgotPasswordEmail');
 const auth = require('../../../middlewares/auth');
+const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
+const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
 
 module.exports = {
   Query: {
@@ -40,6 +42,36 @@ module.exports = {
         return user;
       } catch (error) {
         throw new Error('Cannot show user', { error });
+      }
+    },
+    tasksByUser: async (_, { workspaceId }, context) => {
+      try {
+        auth(context);
+        const { userId } = context.req;
+        const owner = await isWorkspaceOwner(workspaceId, userId);
+        const workspaceMember = await isWorkspaceMember(workspaceId, userId);
+        if (!owner && !workspaceMember) {
+          throw new ForbiddenError('Not authorized to see tasks');
+        }
+
+        const mytasks = await User.findAll({
+          where: {
+            id: userId,
+          },
+          raw: true,
+          nest: true,
+          include: {
+            association: 'users_tasks',
+            where: {
+              workspaceId,
+              assignTo: userId,
+            },
+          },
+        });
+
+        return mytasks;
+      } catch (error) {
+        throw new ApolloError('Cannot show loggred user tasks for this workspace');
       }
     },
   },

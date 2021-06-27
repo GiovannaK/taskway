@@ -11,6 +11,7 @@ type User {
   emailConfirmationExpires: String
   isVerified: Boolean
   createdAt: String!
+  users_tasks: Task
 }
 
 input UserInput {
@@ -23,6 +24,7 @@ input UserInput {
 type Query {
   users: [User!]!
   user: User!
+  tasksByUser(workspaceId: ID!): [User!]!
 }
 
 type Mutation {

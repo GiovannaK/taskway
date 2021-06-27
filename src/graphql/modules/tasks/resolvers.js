@@ -6,7 +6,9 @@ const auth = require('../../../middlewares/auth');
 const checkPermission = require('../../../middlewares/checkPermission');
 const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
 const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
-const { Task, Workspace, Permission } = require('../../../models');
+const {
+  Task, Workspace, Permission,
+} = require('../../../models');
 const s3 = require('../../../modules/s3');
 
 const processUpload = async (file, id, workspaceId, context) => {
