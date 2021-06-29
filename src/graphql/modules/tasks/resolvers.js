@@ -2,6 +2,7 @@
 /* eslint-disable camelcase */
 const { ApolloError, ForbiddenError, UserInputError } = require('apollo-server-errors');
 const { v4: uuid } = require('uuid');
+const { Op } = require('sequelize');
 const auth = require('../../../middlewares/auth');
 const checkPermission = require('../../../middlewares/checkPermission');
 const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
@@ -91,6 +92,7 @@ module.exports = {
         }
 
         const tasks = await Task.findAll({
+          order: [['createdAt', 'DESC']],
           raw: true,
           nest: true,
           where: {
@@ -103,7 +105,49 @@ module.exports = {
 
         return tasks;
       } catch (error) {
-        throw new ApolloError('Cannot show tasks for this workspace');
+        throw new ApolloError('Cannot show tasks for this workspace', { error });
+      }
+    },
+    tasksFilter: async (_, {
+      workspaceId, progress, maxDate, priority,
+    }, context) => {
+      try {
+        auth(context);
+        const { userId } = context.req;
+        const owner = await isWorkspaceOwner(workspaceId, userId);
+        const workspaceMember = await isWorkspaceMember(workspaceId, userId);
+
+        if (!owner && !workspaceMember) {
+          throw new ForbiddenError('Not authorized to see tasks');
+        }
+
+        const tasks = await Task.findAll({
+          order: [['updatedAt', 'DESC']],
+          raw: true,
+          nest: true,
+          where: {
+            workspaceId,
+            [Op.or]: [
+              {
+                priority,
+              },
+              {
+                progress,
+              },
+              {
+                maxDate,
+              },
+            ],
+          },
+          include: {
+            association: 'tasksUsers',
+          },
+        });
+
+        return tasks;
+      } catch (error) {
+        console.log(error);
+        throw new ApolloError('Cannot filter tasks', { error });
       }
     },
   },
@@ -156,7 +200,7 @@ module.exports = {
 
         return task;
       } catch (error) {
-        throw new ApolloError('Cannot create task');
+        throw new ApolloError('Cannot create task', { error });
       }
     },
     updateTask: async (_, {
@@ -213,7 +257,7 @@ module.exports = {
 
         return task;
       } catch (error) {
-        throw new ApolloError('Cannot update task');
+        throw new ApolloError('Cannot update task', { error });
       }
     },
     deleteTask: async (_, { id, workspaceId }, context) => {
@@ -252,7 +296,7 @@ module.exports = {
 
         return !!task;
       } catch (error) {
-        throw new ApolloError('Cannot delete task');
+        throw new ApolloError('Cannot delete task', { error });
       }
     },
     taskSingleUpload: async (_, args, context) => processUpload(

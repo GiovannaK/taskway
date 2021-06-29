@@ -19,6 +19,11 @@ type Task {
 
 type Query {
   tasks(workspaceId: ID!): [Task!]!
+  tasksFilter(
+    workspaceId: ID!,
+    progress: String,
+    maxDate: String,
+    priority: String): [Task!]!
 }
 
 type Mutation {
