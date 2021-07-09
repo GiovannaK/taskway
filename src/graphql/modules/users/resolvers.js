@@ -103,6 +103,8 @@ module.exports = {
           maxAge: 1000 * 60 * 60 * 24 * 7,
         });
 
+        res.cookie('logged', 'user is logged in');
+
         const data = { token, id: user.id, ...user };
 
         return data;
