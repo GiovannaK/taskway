@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
-const { UserInputError, ApolloError, ForbiddenError } = require('apollo-server-errors');
+const {
+  UserInputError, ApolloError, ForbiddenError, AuthenticationError,
+} = require('apollo-server-errors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { User, Profile } = require('../../../models');
@@ -103,13 +105,15 @@ module.exports = {
           maxAge: 1000 * 60 * 60 * 24 * 7,
         });
 
-        res.cookie('logged', 'user is logged in');
+        res.cookie('logged', 'user is logged in', {
+          maxAge: 1000 * 60 * 60 * 24 * 7,
+        });
 
         const data = { token, id: user.id, ...user };
 
         return data;
       } catch (error) {
-        throw error;
+        throw new AuthenticationError('Somenthing went wrong, cannot authenticate user', { error });
       }
     },
 
