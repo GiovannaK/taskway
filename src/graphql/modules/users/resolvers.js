@@ -117,6 +117,19 @@ module.exports = {
       }
     },
 
+    userLogout: async (_, __, context) => {
+      try {
+        auth(context);
+
+        context.res.clearCookie('id');
+        context.res.clearCookie('logged');
+
+        return true;
+      } catch (error) {
+        throw new AuthenticationError('Cannot logout user', { error });
+      }
+    },
+
     userRegister: async (_, {
       data: {
         firstName, lastName, email, password,

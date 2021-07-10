@@ -33,4 +33,5 @@ type Mutation {
   userLogin(email: String!, password: String!): User!
   userForgotPassword(email: String!): User!
   userResetPassword(passwordResetToken: String!, password: String!): User!
+  userLogout: Boolean
 }
