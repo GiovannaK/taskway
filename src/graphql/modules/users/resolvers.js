@@ -130,11 +130,8 @@ module.exports = {
       }
     },
 
-    userRegister: async (_, {
-      data: {
-        firstName, lastName, email, password,
-      },
-    }) => {
+    // eslint-disable-next-line object-curly-newline
+    userRegister: async (_, { firstName, lastName, email, password }, __) => {
       try {
         const userAlreadyExists = await User.findOne({ where: { email } });
 

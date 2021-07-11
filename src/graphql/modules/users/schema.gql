@@ -14,13 +14,6 @@ type User {
   users_tasks: Task
 }
 
-input UserInput {
-  firstName: String!
-  lastName: String!
-  email: String!
-  password: String!
-}
-
 type Query {
   users: [User!]!
   user: User!
@@ -28,7 +21,11 @@ type Query {
 }
 
 type Mutation {
-  userRegister(data: UserInput!): User!
+  userRegister(
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!): User!
   userConfirmAccount(emailConfirmationToken: String!): User!
   userLogin(email: String!, password: String!): User!
   userForgotPassword(email: String!): User!
