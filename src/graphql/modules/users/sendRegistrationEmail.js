@@ -5,9 +5,9 @@ module.exports = async (user) => {
   const accountConfirmationToken = user.generateConfirmationToken();
 
   await user.save();
-  const confirmationUrl = `${accountConfirmationToken}`;
+  const confirmationUrl = `${process.env.CLIENT_URL}/activateAccount/${accountConfirmationToken}`;
   const message = `<h1>Confirme sua conta</h1>
-      <h3>${confirmationUrl}</h3>
+      <h3><a href=${confirmationUrl}></a>${confirmationUrl}</h3>
     `;
 
   try {
