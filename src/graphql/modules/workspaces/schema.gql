@@ -4,6 +4,7 @@ type Workspace {
   ownerId: ID!
   createdAt: String!
   updatedAt: String!
+  users: User
 }
 
 type User_Workspaces {
@@ -14,6 +15,7 @@ type User_Workspaces {
 
 type Query {
   workspaces: [Workspace!]!
+  workspaceMember: [Workspace!]!
   workspace(id: ID!): Workspace!
   usersWorkspace(id: ID!): [User]
 }

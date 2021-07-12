@@ -23,6 +23,26 @@ module.exports = {
         throw new Error('Cannot found Workspaces for this user', { error });
       }
     },
+    workspaceMember: async (_, __, context) => {
+      try {
+        auth(context);
+        const { userId } = context.req;
+        const workspaces = await Workspace.findAll({
+          raw: true,
+          nest: true,
+          include: {
+            association: 'users',
+            where: {
+              id: userId,
+            },
+          },
+        });
+
+        return workspaces;
+      } catch (error) {
+        throw new Error('Cannot found Workspaces for this user', { error });
+      }
+    },
     workspace: async (_, { id }, context) => {
       try {
         auth(context);
