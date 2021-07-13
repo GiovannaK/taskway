@@ -18,12 +18,17 @@ module.exports = {
           },
           raw: true,
           nest: true,
-          include: {
-            association: 'owner',
-            include: {
-              association: 'profile',
+          include: [
+            {
+              association: 'owner',
+              include: {
+                association: 'profile',
+              },
             },
-          },
+            {
+              association: 'users',
+            },
+          ],
         });
         return workspaces;
       } catch (error) {
