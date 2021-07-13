@@ -5,6 +5,7 @@ type Workspace {
   createdAt: String!
   updatedAt: String!
   users: User
+  owner: User
 }
 
 type User_Workspaces {

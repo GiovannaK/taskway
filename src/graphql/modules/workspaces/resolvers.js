@@ -16,10 +16,18 @@ module.exports = {
           where: {
             ownerId: userId,
           },
+          raw: true,
+          nest: true,
+          include: {
+            association: 'owner',
+            include: {
+              association: 'profile',
+            },
+          },
         });
-
         return workspaces;
       } catch (error) {
+        console.log(error);
         throw new Error('Cannot found Workspaces for this user', { error });
       }
     },
