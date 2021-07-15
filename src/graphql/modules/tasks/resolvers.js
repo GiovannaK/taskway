@@ -93,13 +93,15 @@ module.exports = {
 
         const tasks = await Task.findAll({
           order: [['createdAt', 'DESC']],
-          raw: true,
-          nest: true,
+          required: true,
           where: {
             workspaceId,
           },
           include: {
             association: 'tasksUsers',
+            include: {
+              association: 'profile',
+            },
           },
         });
 
