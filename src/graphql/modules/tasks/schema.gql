@@ -24,6 +24,7 @@ type Query {
     progress: String,
     maxDate: String,
     priority: String): [Task!]!
+  taskById(workspaceId: ID!, id: ID!): Task!
 }
 
 type Mutation {

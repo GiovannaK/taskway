@@ -110,6 +110,35 @@ module.exports = {
         throw new ApolloError('Cannot show tasks for this workspace', { error });
       }
     },
+    taskById: async (_, { workspaceId, id }, context) => {
+      try {
+        auth(context);
+        const { userId } = context.req;
+        const owner = await isWorkspaceOwner(workspaceId, userId);
+        const workspaceMember = await isWorkspaceMember(workspaceId, userId);
+
+        if (!owner && !workspaceMember) {
+          throw new ForbiddenError('Not authorized to see tasks');
+        }
+
+        const tasks = await Task.findOne({
+          required: true,
+          where: {
+            id,
+          },
+          include: {
+            association: 'tasksUsers',
+            include: {
+              association: 'profile',
+            },
+          },
+        });
+
+        return tasks;
+      } catch (error) {
+        throw new ApolloError('Cannot show tasks for this workspace', { error });
+      }
+    },
     tasksFilter: async (_, {
       workspaceId, progress, maxDate, priority,
     }, context) => {
