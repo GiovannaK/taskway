@@ -64,7 +64,16 @@ module.exports = {
       try {
         auth(context);
         const { userId } = context.req;
-        const profile = await Profile.findOne({ where: { userId } });
+        const profile = await Profile.findOne(
+          {
+            where: {
+              userId,
+            },
+            include: {
+              association: 'user',
+            },
+          },
+        );
 
         if (!profile) {
           throw new Error('Cannot find user');
