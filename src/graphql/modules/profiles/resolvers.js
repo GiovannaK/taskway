@@ -1,6 +1,6 @@
 /* eslint-disable prefer-promise-reject-errors */
 const { v4: uuid } = require('uuid');
-const { UserInputError } = require('apollo-server-express');
+const { UserInputError, ApolloError } = require('apollo-server-express');
 const s3 = require('../../../modules/s3');
 const { Profile } = require('../../../models');
 const auth = require('../../../middlewares/auth');
@@ -81,34 +81,49 @@ module.exports = {
 
         return profile;
       } catch (error) {
-        throw new Error('Cannot show profile');
+        throw new Error('Cannot show profile', { error });
       }
     },
   },
   Mutation: {
     singleUpload: async (_, args, context) => processUpload(args.file, context),
-    updateBio: async (_, { bio }, context) => {
+    updateProfile: async (_, {
+      bio, firstName, lastName, email,
+    }, context) => {
       try {
         auth(context);
         const { userId } = context.req;
 
-        const profile = await Profile.findOne({ where: { userId } });
+        const profile = await Profile.findOne(
+          {
+            where: {
+              userId,
+            },
+            include: {
+              association: 'user',
+            },
+          },
+        );
 
         if (!profile) {
-          throw new Error('Cannot find profile');
+          throw new ApolloError('Cannot find profile');
         }
 
-        if (bio.length < 1) {
-          throw new UserInputError('Bio must have at least 1 character');
+        if (firstName.length < 3 || lastName.length < 3 || email.length < 3) {
+          throw new UserInputError('Check if all information is correct');
         }
 
         profile.bio = bio;
+        profile.user.firstName = firstName;
+        profile.user.lastName = lastName;
+        profile.user.email = email;
 
         await profile.save();
+        await profile.user.save();
 
         return profile;
       } catch (error) {
-        throw error;
+        throw new ApolloError('Cannot update profile', { error });
       }
     },
   },

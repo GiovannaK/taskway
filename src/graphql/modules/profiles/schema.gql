@@ -18,7 +18,7 @@ type Query {
 
 type Mutation {
   singleUpload(file: Upload!): Profile,
-  updateBio(bio: String): Profile!
+  updateProfile(bio: String, firstName: String!, lastName: String!, email: String!): Profile!
 }
 
 
