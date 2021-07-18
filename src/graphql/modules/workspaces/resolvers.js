@@ -88,6 +88,9 @@ module.exports = {
         const workspace = await Workspace.findByPk(id, {
           include: {
             association: 'users',
+            include: {
+              association: 'profile',
+            },
           },
         });
 
