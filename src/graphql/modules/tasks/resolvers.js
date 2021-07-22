@@ -1,8 +1,8 @@
+/* eslint-disable no-prototype-builtins */
 /* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable camelcase */
 const { ApolloError, ForbiddenError, UserInputError } = require('apollo-server-errors');
 const { v4: uuid } = require('uuid');
-const { Op } = require('sequelize');
 const auth = require('../../../middlewares/auth');
 const checkPermission = require('../../../middlewares/checkPermission');
 const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
@@ -80,23 +80,45 @@ const processUpload = async (file, id, workspaceId, context) => {
 
 module.exports = {
   Query: {
-    tasks: async (_, { workspaceId }, context) => {
+    tasks: async (_, args, context) => {
       try {
         auth(context);
         const { userId } = context.req;
-        const owner = await isWorkspaceOwner(workspaceId, userId);
-        const workspaceMember = await isWorkspaceMember(workspaceId, userId);
+        const owner = await isWorkspaceOwner(args.workspaceId, userId);
+        const workspaceMember = await isWorkspaceMember(args.workspaceId, userId);
 
         if (!owner && !workspaceMember) {
           throw new ForbiddenError('Not authorized to see tasks');
         }
 
+        if (!owner && !workspaceMember) {
+          throw new ForbiddenError('Not authorized to see tasks');
+        }
+        const query = {};
+
+        if (args.workspaceId) {
+          query.workspaceId = args.workspaceId;
+        }
+
+        if (args.assignTo !== '' && args.assignTo !== null && args.assignTo !== undefined) {
+          query.assignTo = args.assignTo;
+        }
+
+        if (args.progress !== '' && args.progress !== null && args.progress !== undefined) {
+          query.progress = args.progress;
+        }
+
+        if (args.priority !== '' && args.priority !== null && args.priority !== undefined) {
+          query.priority = args.priority;
+        }
+
+        if (args.maxDate !== '' && args.maxDate !== null && args.maxDate !== undefined) {
+          query.maxDate = args.maxDate;
+        }
+
         const tasks = await Task.findAll({
-          order: [['createdAt', 'DESC']],
           required: true,
-          where: {
-            workspaceId,
-          },
+          where: query,
           include: {
             association: 'tasksUsers',
             include: {
@@ -137,48 +159,6 @@ module.exports = {
         return tasks;
       } catch (error) {
         throw new ApolloError('Cannot show tasks for this workspace', { error });
-      }
-    },
-    tasksFilter: async (_, {
-      workspaceId, progress, maxDate, priority,
-    }, context) => {
-      try {
-        auth(context);
-        const { userId } = context.req;
-        const owner = await isWorkspaceOwner(workspaceId, userId);
-        const workspaceMember = await isWorkspaceMember(workspaceId, userId);
-
-        if (!owner && !workspaceMember) {
-          throw new ForbiddenError('Not authorized to see tasks');
-        }
-
-        const tasks = await Task.findAll({
-          order: [['updatedAt', 'DESC']],
-          raw: true,
-          nest: true,
-          where: {
-            workspaceId,
-            [Op.or]: [
-              {
-                priority,
-              },
-              {
-                progress,
-              },
-              {
-                maxDate,
-              },
-            ],
-          },
-          include: {
-            association: 'tasksUsers',
-          },
-        });
-
-        return tasks;
-      } catch (error) {
-        console.log(error);
-        throw new ApolloError('Cannot filter tasks', { error });
       }
     },
   },

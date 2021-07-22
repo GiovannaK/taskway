@@ -18,12 +18,8 @@ type Task {
 }
 
 type Query {
-  tasks(workspaceId: ID!): [Task!]!
-  tasksFilter(
-    workspaceId: ID!,
-    progress: String,
-    maxDate: String,
-    priority: String): [Task!]!
+  tasks(workspaceId: ID!,progress: String, maxDate: String,
+    priority: String assignTo: ID!): [Task!]!
   taskById(workspaceId: ID!, id: ID!): Task!
 }
 
