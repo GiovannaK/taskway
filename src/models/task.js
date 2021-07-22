@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     maxDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
     },
     progress: {
       type: DataTypes.ENUM('Not started', 'In progress', 'finished'),
