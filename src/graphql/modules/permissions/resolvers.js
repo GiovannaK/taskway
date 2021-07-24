@@ -65,18 +65,24 @@ module.exports = {
           include: [
             {
               association: 'permissions_users',
-              include: {
-                association: 'users_workspaces',
-                where: {
-                  id: workspaceId,
+              include: [
+                {
+                  association: 'profile',
                 },
-              },
+                {
+                  association: 'users_workspaces',
+                  where: {
+                    id: workspaceId,
+                  },
+                },
+              ],
             },
           ],
         });
 
         return permissions;
       } catch (error) {
+        console.log(error);
         throw new ApolloError('Cannot show users permissions in this workspace');
       }
     },
