@@ -3,6 +3,7 @@ type Permission {
   name: String!
   createdAt: String!
   updatedAt: String!
+  permissions_users: [User]
 }
 
 type User_Permissions {
@@ -10,10 +11,13 @@ type User_Permissions {
   userId: ID!
   permissionId: ID!
   workspaceId: ID!
+  permissions_workspace: Workspace
+  user_permission: User
 }
 
 type Query {
   userPermissionsByWorkspace(workspaceId: ID!): [User_Permissions]
+  usersPermissionsByWorkspace(workspaceId: ID!): [Permission]
   showPermissions: [Permission]
 }
 

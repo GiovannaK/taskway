@@ -50,6 +50,36 @@ module.exports = {
         throw new ApolloError('Cannot show logged user permissions in this workspace');
       }
     },
+    usersPermissionsByWorkspace: async (_, { workspaceId }, context) => {
+      try {
+        auth(context);
+        const { userId } = context.req;
+        const owner = await isWorkspaceOwner(workspaceId, userId);
+
+        if (!owner) {
+          throw new ForbiddenError('Unauthorized to show permissions in this workspace');
+        }
+
+        const permissions = await Permission.findAll({
+          required: true,
+          include: [
+            {
+              association: 'permissions_users',
+              include: {
+                association: 'users_workspaces',
+                where: {
+                  id: workspaceId,
+                },
+              },
+            },
+          ],
+        });
+
+        return permissions;
+      } catch (error) {
+        throw new ApolloError('Cannot show users permissions in this workspace');
+      }
+    },
   },
   Mutation: {
     addUserPermission: async (_, { permissionId, userId, workspaceId }, context) => {

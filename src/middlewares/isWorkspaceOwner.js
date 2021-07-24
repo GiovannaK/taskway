@@ -3,8 +3,6 @@ const { Workspace } = require('../models');
 
 const isWorkspaceOwner = async (workspaceId, userId) => {
   try {
-    /* const { userId } = context.req; */
-
     const workspace = await Workspace.findByPk(workspaceId);
 
     if (!workspace) {
@@ -17,7 +15,6 @@ const isWorkspaceOwner = async (workspaceId, userId) => {
 
     return true;
   } catch (error) {
-    console.log(error);
     throw new ApolloError(
       'Server Error, cannot determine if user is workspace owner ',
       { error },
