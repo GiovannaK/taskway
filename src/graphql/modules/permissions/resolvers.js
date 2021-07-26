@@ -156,7 +156,6 @@ module.exports = {
 
         return !!removedPermission;
       } catch (error) {
-        console.log(error);
         throw new ApolloError('Cannot remove this permission');
       }
     },
