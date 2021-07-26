@@ -76,25 +76,26 @@ module.exports = {
         }
 
         const permissions = await Permission.findAll({
-          required: true,
           include: [
             {
               association: 'permissions_users',
+              required: true,
               include: [
                 {
-                  association: 'profile',
-                },
-                {
                   association: 'users_workspaces',
+                  required: true,
                   where: {
                     id: workspaceId,
                   },
+                },
+                {
+                  association: 'profile',
+                  required: true,
                 },
               ],
             },
           ],
         });
-
         return permissions;
       } catch (error) {
         throw new ApolloError('Cannot show users permissions in this workspace', { error });

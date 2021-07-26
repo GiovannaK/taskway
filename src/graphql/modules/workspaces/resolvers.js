@@ -107,10 +107,14 @@ module.exports = {
         auth(context);
         const { userId } = context.req;
 
-        const workspace = await Workspace.create({
-          ownerId: userId,
-          title,
+        const [workspace, created] = await Workspace.findOrCreate({
+          where: {
+            ownerId: userId,
+            title,
+          },
         });
+
+        if (!created) throw new UserInputError('This Workspace already exists');
 
         return workspace;
       } catch (error) {
