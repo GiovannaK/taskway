@@ -27,17 +27,32 @@ module.exports = {
         const { userId } = context.req;
 
         const owner = await isWorkspaceOwner(workspaceId, userId);
+        const workspaceMember = await isWorkspaceMember(workspaceId, userId);
 
-        const permissions = await Workspace.findByPk(workspaceId, {
-          include: {
-            association: 'workspaces_permissions',
-            where: {
-              userId,
+        const permissions = await Permission.findAll({
+          required: true,
+          include: [
+            {
+              association: 'permissions_users',
+              where: {
+                id: userId,
+              },
+              include: [
+                {
+                  association: 'profile',
+                },
+                {
+                  association: 'users_workspaces',
+                  where: {
+                    id: workspaceId,
+                  },
+                },
+              ],
             },
-          },
+          ],
         });
 
-        if (!permissions && !owner) {
+        if (!owner && !workspaceMember) {
           throw new ForbiddenError('You do not have any special permission in this workspace');
         }
 
@@ -45,9 +60,9 @@ module.exports = {
           return [];
         }
 
-        return permissions.workspaces_permissions;
+        return permissions;
       } catch (error) {
-        throw new ApolloError('Cannot show logged user permissions in this workspace');
+        throw new ApolloError('Cannot show logged user permissions in this workspace', { error });
       }
     },
     usersPermissionsByWorkspace: async (_, { workspaceId }, context) => {
@@ -82,8 +97,7 @@ module.exports = {
 
         return permissions;
       } catch (error) {
-        console.log(error);
-        throw new ApolloError('Cannot show users permissions in this workspace');
+        throw new ApolloError('Cannot show users permissions in this workspace', { error });
       }
     },
   },
