@@ -4,6 +4,7 @@ const {
 } = require('apollo-server-errors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const { Op } = require('sequelize');
 const { User, Profile } = require('../../../models');
 const sendRegistrationEmail = require('./sendRegistrationEmail');
 const sendForgotPasswordEmail = require('./sendForgotPasswordEmail');
@@ -13,18 +14,36 @@ const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
 
 module.exports = {
   Query: {
-    users: async (_, __, context) => {
+    users: async (_, { query }, context) => {
       try {
         auth(context);
+        const { userId } = context.req;
         const user = await User.findAll({
           where: {
             isVerified: true,
+            id: { [Op.ne]: userId },
+            [Op.or]: [
+              {
+                firstName: {
+                  [Op.like]: `%${query}%`,
+                },
+              },
+              {
+                lastName: {
+                  [Op.like]: `%${query}%`,
+                },
+              },
+              {
+                email: {
+                  [Op.like]: `%${query}%`,
+                },
+              },
+            ],
+          },
+          include: {
+            association: 'profile',
           },
         });
-
-        if (!user) {
-          throw new Error('Users does not exists');
-        }
 
         return user;
       } catch (error) {

@@ -18,7 +18,7 @@ type User {
 }
 
 type Query {
-  users: [User!]!
+  users(query: String): [User!]!
   user: User!
   tasksByUser(workspaceId: ID!): [User!]!
 }
