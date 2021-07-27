@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { ApolloServer } = require('apollo-server-express');
 const express = require('express');
+const { createServer } = require('http');
 const cookieParser = require('cookie-parser');
 const { sequelize } = require('./models');
 const typeDefs = require('./graphql/typeDefs');
@@ -11,6 +12,7 @@ require('dotenv').config({
 });
 
 const app = express();
+const httpServer = createServer(app);
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -25,9 +27,10 @@ const corsOptions = {
 
 app.use(cookieParser());
 server.applyMiddleware({ app, path: '/', cors: corsOptions });
+server.installSubscriptionHandlers(httpServer);
 
 if (process.env.NODE_ENV !== 'test') {
-  app.listen({ port: process.env.PORT || 4000 }, () => {
+  httpServer.listen({ port: process.env.PORT || 4000 }, () => {
     console.log(`🚀 Server ready at ${process.env.PORT}`);
   });
 
