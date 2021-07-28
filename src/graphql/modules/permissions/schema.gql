@@ -18,6 +18,7 @@ type User_Permissions {
 type Query {
   userPermissionsByWorkspace(workspaceId: ID!): [Permission]
   usersPermissionsByWorkspace(workspaceId: ID!): [Permission]
+  hasPermissionToAccessWorkspace(workspaceId: ID!): Boolean!
   showPermissions: [Permission]
 }
 

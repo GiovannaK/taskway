@@ -65,6 +65,21 @@ module.exports = {
         throw new ApolloError('Cannot show logged user permissions in this workspace', { error });
       }
     },
+    hasPermissionToAccessWorkspace: async (_, { workspaceId }, context) => {
+      try {
+        auth(context);
+        const { userId } = context.req;
+
+        const owner = await isWorkspaceOwner(workspaceId, userId);
+        const workspaceMember = await isWorkspaceMember(workspaceId, userId);
+        if (!owner && !workspaceMember) {
+          return false;
+        }
+        return true;
+      } catch (error) {
+        throw new ApolloError('Cannot verify if current user has permission to access this workspace', { error });
+      }
+    },
     usersPermissionsByWorkspace: async (_, { workspaceId }, context) => {
       try {
         auth(context);
