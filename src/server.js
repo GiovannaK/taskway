@@ -16,7 +16,8 @@ const httpServer = createServer(app);
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req, res, next }) => ({ req, res, next }),
+  subscriptions: ({ onConnect }) => ({ onConnect }),
+  context: ({ req, res, connection }) => ({ req, res, connection }),
 });
 
 const corsOptions = {
