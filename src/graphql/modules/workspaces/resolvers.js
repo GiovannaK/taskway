@@ -44,12 +44,20 @@ module.exports = {
         const workspaces = await Workspace.findAll({
           raw: true,
           nest: true,
-          include: {
-            association: 'users',
-            where: {
-              id: userId,
+          include: [
+            {
+              association: 'owner',
+              include: {
+                association: 'profile',
+              },
             },
-          },
+            {
+              association: 'users',
+              where: {
+                id: userId,
+              },
+            },
+          ],
         });
 
         return workspaces;

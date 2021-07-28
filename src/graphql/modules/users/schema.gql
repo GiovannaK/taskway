@@ -15,6 +15,7 @@ type User {
   profile: Profile
   users_permissions: [Permission]
   users_workspaces: Workspace
+  usersWorkspaces: [Workspace]
 }
 
 type Query {
