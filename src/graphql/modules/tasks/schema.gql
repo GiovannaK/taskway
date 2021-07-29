@@ -47,3 +47,7 @@ type Mutation {
   deleteTask(id: ID!, workspaceId: ID!): Boolean
   taskSingleUpload(id: ID!, file: Upload!, workspaceId: ID!): Task,
 }
+
+type Subscription {
+  addTask(workspaceId: ID!): Task!
+}

@@ -17,7 +17,9 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   subscriptions: ({ onConnect }) => ({ onConnect }),
-  context: ({ req, res, connection }) => ({ req, res, connection }),
+  context: ({ req, res, connection }) => ({
+    req, res, connection,
+  }),
 });
 
 const corsOptions = {

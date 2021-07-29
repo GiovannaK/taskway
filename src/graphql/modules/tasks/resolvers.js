@@ -1,7 +1,9 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable camelcase */
 const { ApolloError, ForbiddenError, UserInputError } = require('apollo-server-errors');
+const { withFilter } = require('apollo-server-express');
 const { v4: uuid } = require('uuid');
 const auth = require('../../../middlewares/auth');
 const checkPermission = require('../../../middlewares/checkPermission');
@@ -10,7 +12,9 @@ const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
 const {
   Task, Workspace, Permission,
 } = require('../../../models');
+const { pubsub } = require('../../../modules/pubSub');
 const s3 = require('../../../modules/s3');
+const { ADD_TASK } = require('./channels');
 
 const processUpload = async (file, id, workspaceId, context) => {
   try {
@@ -209,6 +213,10 @@ module.exports = {
           assignTo,
         });
 
+        pubsub.publish(ADD_TASK, {
+          addTask: task,
+        });
+
         return task;
       } catch (error) {
         throw new ApolloError('Cannot create task', { error });
@@ -313,5 +321,15 @@ module.exports = {
     taskSingleUpload: async (_, args, context) => processUpload(
       args.file, args.id, args.workspaceId, context,
     ),
+  },
+  Subscription: {
+    addTask: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(ADD_TASK),
+        (payload, variables) => {
+          return (payload.addTask.workspaceId === variables.workspaceId);
+        },
+      ),
+    },
   },
 };
