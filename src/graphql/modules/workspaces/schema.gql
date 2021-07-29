@@ -4,8 +4,9 @@ type Workspace {
   ownerId: ID!
   createdAt: String!
   updatedAt: String!
-  users: [User!]!
+  users: [User]
   owner: User
+  workspaces_permissions: [User_Permissions]
 }
 
 type User_Workspaces {

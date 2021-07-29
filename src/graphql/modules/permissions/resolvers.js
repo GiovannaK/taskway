@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 const { ForbiddenError, ApolloError, UserInputError } = require('apollo-server-errors');
@@ -91,6 +92,7 @@ module.exports = {
         }
 
         const permissions = await Permission.findAll({
+          required: true,
           include: [
             {
               association: 'permissions_users',
@@ -113,6 +115,7 @@ module.exports = {
         });
         return permissions;
       } catch (error) {
+        console.log(error);
         throw new ApolloError('Cannot show users permissions in this workspace', { error });
       }
     },
