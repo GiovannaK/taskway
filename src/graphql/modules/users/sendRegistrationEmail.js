@@ -13,12 +13,11 @@ module.exports = async (user) => {
   try {
     await sendEmail({
       to: user.email,
-      subject: 'Confirm your account',
+      subject: 'Ative sua conta',
       text: message,
     });
     return user;
   } catch (error) {
-    console.log(error);
     user.emailConfirmationToken = undefined;
     user.emailConfirmationExpires = undefined;
     await user.save();
