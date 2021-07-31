@@ -16,3 +16,12 @@ type Query {
 type Mutation {
   createComment(workspaceId: ID!, taskId: ID!, body: String!): Comment!
 }
+
+type Subscription {
+  addComment(taskId: ID!): SubscriptionData!
+}
+
+type SubscriptionData {
+  comment: Comment!
+  author: User!
+}

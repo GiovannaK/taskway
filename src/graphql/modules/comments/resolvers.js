@@ -1,8 +1,12 @@
+/* eslint-disable arrow-body-style */
 const { ForbiddenError, ApolloError } = require('apollo-server-errors');
+const { withFilter } = require('apollo-server-express');
 const auth = require('../../../middlewares/auth');
 const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
 const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
-const { Comment } = require('../../../models');
+const { Comment, User } = require('../../../models');
+const { pubsub } = require('../../../modules/pubSub');
+const { ADD_COMMENT } = require('./channels');
 
 module.exports = {
   Query: {
@@ -53,10 +57,39 @@ module.exports = {
           userId,
         });
 
+        const user = await User.findOne({
+          where: {
+            id: userId,
+          },
+          include: {
+            association: 'profile',
+          },
+        });
+
+        comment.author = user;
+
+        pubsub.publish(ADD_COMMENT, {
+          addComment: {
+            comment,
+            author: user,
+          },
+        });
+
         return comment;
       } catch (error) {
         throw new ApolloError('Cannot create a comment', { error });
       }
+    },
+  },
+
+  Subscription: {
+    addComment: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(ADD_COMMENT),
+        (payload, variables) => {
+          return (payload.addComment.comment.taskId === variables.taskId);
+        },
+      ),
     },
   },
 };
