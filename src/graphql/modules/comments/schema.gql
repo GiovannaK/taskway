@@ -1,0 +1,18 @@
+type Comment {
+  id: ID!
+  body: String!
+  createdAt: String!
+  updatedAt: String!
+  userId: ID!
+  taskId: ID!
+  author: User
+  comment_task: Task
+}
+
+type Query {
+  commentsByTask(taskId: ID!, workspaceId: ID!): [Comment]!
+}
+
+type Mutation {
+  createComment(workspaceId: ID!, taskId: ID!, body: String!): Comment!
+}

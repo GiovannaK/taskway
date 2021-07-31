@@ -95,9 +95,6 @@ module.exports = {
           throw new ForbiddenError('Not authorized to see tasks');
         }
 
-        if (!owner && !workspaceMember) {
-          throw new ForbiddenError('Not authorized to see tasks');
-        }
         const query = {};
 
         if (args.workspaceId) {

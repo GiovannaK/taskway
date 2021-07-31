@@ -10,9 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Workspace, User }) {
+    static associate({ Workspace, User, Comment }) {
       this.belongsTo(Workspace, { foreignKey: 'workspaceId', as: 'task_workspaces' });
       this.belongsTo(User, { foreignKey: 'assignTo', as: 'tasksUsers' });
+      this.hasMany(Comment, { foreignKey: 'taskId', as: 'task_comments' });
     }
   }
   Task.init({
