@@ -31,6 +31,7 @@ module.exports = {
               association: 'profile',
             },
           },
+          order: [['createdAt', 'DESC']],
         });
 
         return comments;
@@ -66,12 +67,11 @@ module.exports = {
           },
         });
 
-        comment.author = user;
-
         pubsub.publish(ADD_COMMENT, {
           addComment: {
             comment,
             author: user,
+            profile: user.profile,
           },
         });
 
