@@ -104,7 +104,6 @@ module.exports = {
 
         return workspace.users;
       } catch (error) {
-        console.log(error);
         throw new ApolloError('Cannot show users for this workspace', { error });
       }
     },
@@ -126,7 +125,6 @@ module.exports = {
 
         return workspace;
       } catch (error) {
-        console.log(error);
         throw new ApolloError('Workspace could not be created', { error });
       }
     },
@@ -168,7 +166,6 @@ module.exports = {
 
         return addedUser;
       } catch (error) {
-        console.log(error);
         throw new ApolloError('Cannot add User to workspace', { error });
       }
     },
@@ -206,7 +203,6 @@ module.exports = {
 
         return !!removedUser;
       } catch (error) {
-        console.log(error);
         throw new ApolloError('Cannot delete user from workspace', { error });
       }
     },

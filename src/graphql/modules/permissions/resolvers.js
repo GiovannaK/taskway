@@ -91,29 +91,6 @@ module.exports = {
           throw new ForbiddenError('Unauthorized to show permissions in this workspace');
         }
 
-        /* const permissions = await Permission.findAll({
-          required: true,
-          include: [
-            {
-              association: 'permissions_users',
-              required: true,
-              include: [
-                {
-                  association: 'users_workspaces',
-                  required: true,
-                  where: {
-                    id: workspaceId,
-                  },
-                },
-                {
-                  association: 'profile',
-                  required: true,
-                },
-              ],
-            },
-          ],
-        }); */
-
         const permissions = await Workspace.findByPk(workspaceId, {
           include: [
             {
@@ -121,6 +98,9 @@ module.exports = {
               include: [
                 {
                   association: 'user_permission',
+                  include: {
+                    association: 'profile',
+                  },
                 },
                 {
                   association: 'permissions',
@@ -132,7 +112,6 @@ module.exports = {
 
         return permissions;
       } catch (error) {
-        console.log(error);
         throw new ApolloError('Cannot show users permissions in this workspace', { error });
       }
     },

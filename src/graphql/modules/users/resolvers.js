@@ -171,7 +171,6 @@ module.exports = {
         const userData = await sendRegistrationEmail(user);
         return userData;
       } catch (error) {
-        console.log(error);
         throw new UserInputError('Bad Input', { error });
       }
     },
@@ -202,7 +201,6 @@ module.exports = {
 
         return user;
       } catch (error) {
-        console.log(error);
         throw new Error('Cannot verify user account');
       }
     },
