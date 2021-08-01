@@ -12,13 +12,13 @@ type User_Permissions {
   permissionId: ID!
   workspaceId: ID!
   permissions_workspace: Workspace
-  user_permission: [User]
-  permissions: [Permission]
+  user_permission: User
+  permissions: Permission
 }
 
 type Query {
   userPermissionsByWorkspace(workspaceId: ID!): [Permission]
-  usersPermissionsByWorkspace(workspaceId: ID!): [Permission]
+  usersPermissionsByWorkspace(workspaceId: ID!): Workspace
   hasPermissionToAccessWorkspace(workspaceId: ID!): Boolean!
   showPermissions: [Permission]
 }

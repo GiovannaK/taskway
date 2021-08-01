@@ -91,7 +91,7 @@ module.exports = {
           throw new ForbiddenError('Unauthorized to show permissions in this workspace');
         }
 
-        const permissions = await Permission.findAll({
+        /* const permissions = await Permission.findAll({
           required: true,
           include: [
             {
@@ -112,7 +112,24 @@ module.exports = {
               ],
             },
           ],
+        }); */
+
+        const permissions = await Workspace.findByPk(workspaceId, {
+          include: [
+            {
+              association: 'workspaces_permissions',
+              include: [
+                {
+                  association: 'user_permission',
+                },
+                {
+                  association: 'permissions',
+                },
+              ],
+            },
+          ],
         });
+
         return permissions;
       } catch (error) {
         console.log(error);
