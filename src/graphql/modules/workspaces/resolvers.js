@@ -239,6 +239,10 @@ module.exports = {
           throw new Error('Cannot found workspace');
         }
 
+        if (invitedUser === userId) {
+          throw new ForbiddenError('You cant delete yourself from this workspace');
+        }
+
         const removedUser = await User_Workspaces.destroy({
           where: {
             userId: invitedUser,
