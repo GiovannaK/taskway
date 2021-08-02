@@ -250,6 +250,13 @@ module.exports = {
           },
         });
 
+        const removePermission = await User_Permissions.destroy({
+          where: {
+            userId: invitedUser,
+            workspaceId: workspace.id,
+          },
+        });
+
         return !!removedUser;
       } catch (error) {
         throw new ApolloError('Cannot delete user from workspace', { error });
