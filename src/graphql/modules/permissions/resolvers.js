@@ -47,6 +47,9 @@ module.exports = {
                   where: {
                     id: workspaceId,
                   },
+                  include: {
+                    association: 'owner',
+                  },
                 },
               ],
             },
@@ -55,10 +58,6 @@ module.exports = {
 
         if (!owner && !workspaceMember) {
           throw new ForbiddenError('You do not have any special permission in this workspace');
-        }
-
-        if (owner) {
-          return [];
         }
 
         return permissions;

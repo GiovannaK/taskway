@@ -170,7 +170,6 @@ module.exports = {
 
         return workspace;
       } catch (error) {
-        console.log(error);
         throw new ApolloError('Workspace could not be created', { error });
       }
     },
