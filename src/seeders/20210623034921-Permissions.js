@@ -20,12 +20,6 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      {
-        id: '84161fba-405b-4b17-b6de-b8a0ed7c7cfd',
-        name: 'assignTask',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
     ]);
   },
 

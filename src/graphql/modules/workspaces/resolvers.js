@@ -1,9 +1,12 @@
 /* eslint-disable camelcase */
 const { UserInputError, ForbiddenError, ApolloError } = require('apollo-server-errors');
+const { Op } = require('sequelize');
 const auth = require('../../../middlewares/auth');
 const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
 const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
-const { User_Workspaces, Workspace } = require('../../../models');
+const {
+  User_Workspaces, Workspace, User_Permissions, Permission,
+} = require('../../../models');
 
 /* eslint-disable no-unused-vars */
 module.exports = {
@@ -44,6 +47,9 @@ module.exports = {
         const workspaces = await Workspace.findAll({
           raw: true,
           nest: true,
+          where: {
+            ownerId: { [Op.ne]: userId },
+          },
           include: [
             {
               association: 'owner',
@@ -123,8 +129,48 @@ module.exports = {
 
         if (!created) throw new UserInputError('This Workspace already exists');
 
+        const [addedUser, isCreated] = await User_Workspaces.findOrCreate({
+          where: {
+            userId,
+            workspaceId: workspace.id,
+          },
+        });
+
+        if (!isCreated) throw new UserInputError('Cannot add current user as workspace member');
+
+        const permissions = await Permission.findAll();
+
+        if (!permissions) {
+          throw new ApolloError('Cannot query permissions');
+        }
+
+        const ownerPermissions = [
+          {
+            permissionId: permissions[0].id,
+            workspaceId: workspace.id,
+            userId,
+          },
+          {
+            permissionId: permissions[1].id,
+            workspaceId: workspace.id,
+            userId,
+          },
+          {
+            permissionId: permissions[2].id,
+            workspaceId: workspace.id,
+            userId,
+          },
+        ];
+
+        const addAllPermissions = await User_Permissions.bulkCreate(ownerPermissions);
+
+        if (!addAllPermissions) {
+          throw new ApolloError('Cannot add permissions to workspace owner');
+        }
+
         return workspace;
       } catch (error) {
+        console.log(error);
         throw new ApolloError('Workspace could not be created', { error });
       }
     },
