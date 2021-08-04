@@ -7,7 +7,7 @@
     "pretest": "SET NODE_ENV=test& sequelize db:migrate",
     "test": "SET NODE_ENV=test& jest --updateSnapshot",
     "posttest": "SET NODE_ENV=test& sequelize db:migrate:undo:all",
-    "start": "node src/server.js",
+    "start": "npx sequelize db:migrate && node src/server.js",
     "dev": "nodemon -L src/server.js -e js,gql --ignore __tests__"
   },
   "repository": {
@@ -37,6 +37,7 @@
     "pg-hstore": "^2.3.3",
     "prettier": "^2.3.1",
     "sequelize": "^6.6.2",
+    "sequelize-cli": "^6.2.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
