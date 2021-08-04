@@ -27,7 +27,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
     },
     title: {
-      unique: true,
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
