@@ -9,8 +9,10 @@ module.exports = {
   host: process.env.DB_HOST,
   dialect: process.env.DB_DIALECT || 'postgres',
   storage: './__tests__/database.sqlite',
-  ssl: true,
   dialectOptions: {
-    ssl: true,
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
   },
 };
