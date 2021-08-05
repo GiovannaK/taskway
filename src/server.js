@@ -34,7 +34,7 @@ server.installSubscriptionHandlers(httpServer);
 
 if (process.env.NODE_ENV !== 'test') {
   httpServer.listen({ port: process.env.PORT || 4000 }, () => {
-    console.log(`🚀 Server ready at ${process.env.PORT}`);
+    console.log(`🚀 Server started at ${process.env.PORT}`);
   });
 
   sequelize.authenticate()
