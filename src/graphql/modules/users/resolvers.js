@@ -132,6 +132,7 @@ module.exports = {
 
         return data;
       } catch (error) {
+        console.log(error);
         throw new AuthenticationError('Somenthing went wrong, cannot authenticate user', { error });
       }
     },
