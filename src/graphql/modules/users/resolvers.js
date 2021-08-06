@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 const {
   UserInputError, ApolloError, ForbiddenError, AuthenticationError,
@@ -119,13 +120,25 @@ module.exports = {
           expiresIn: process.env.TOKEN_EXPIRATION,
         });
 
+        const isSecure = () => {
+          if (process.env.COOKIE_SECURE === true) {
+            return 'none';
+          }
+        };
+
+        console.log(isSecure());
+
         res.cookie('id', token, {
           httpOnly: true,
           maxAge: 1000 * 60 * 60 * 24 * 7,
+          secure: process.env.COOKIE_SECURE,
+          sameSite: 'none',
         });
 
         res.cookie('logged', 'user is logged in', {
           maxAge: 1000 * 60 * 60 * 24 * 7,
+          secure: process.env.COOKIE_SECURE,
+          sameSite: 'none',
         });
 
         const data = { token, id: user.id, ...user };
