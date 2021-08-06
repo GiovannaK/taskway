@@ -122,10 +122,14 @@ module.exports = {
         res.cookie('id', token, {
           httpOnly: true,
           maxAge: 1000 * 60 * 60 * 24 * 7,
+          secure: process.env.COOKIE_SECURE,
+          sameSite: 'none',
         });
 
         res.cookie('logged', 'user is logged in', {
           maxAge: 1000 * 60 * 60 * 24 * 7,
+          secure: process.env.COOKIE_SECURE,
+          sameSite: 'none',
         });
 
         const data = { token, id: user.id, ...user };
