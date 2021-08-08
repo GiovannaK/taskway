@@ -214,6 +214,27 @@ module.exports = {
         throw new ApolloError('Cannot add User to workspace', { error });
       }
     },
+    removeWorkspace: async (_, { id }, context) => {
+      try {
+        auth(context);
+        const { userId } = context.req;
+        const owner = await isWorkspaceOwner(id, userId);
+
+        if (!owner) {
+          throw new ForbiddenError('Not authorized to delete this workspace');
+        }
+
+        const removedWorkspace = await Workspace.destroy({
+          where: {
+            id,
+          },
+        });
+
+        return !!removedWorkspace;
+      } catch (error) {
+        throw new ApolloError('Cannot delete workspace', { error });
+      }
+    },
     removeUserFromWorkspace: async (_, args, context) => {
       try {
         auth(context);
