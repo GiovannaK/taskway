@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({
-      Profile, Workspace, Permission, Task, Comment,
+      Profile, Workspace, Permission, Task, Comment, Message,
     }) {
       this.hasOne(Profile, { foreignKey: 'userId', as: 'profile' });
       this.hasMany(Workspace, { foreignKey: 'ownerId', as: 'workspaces' });
@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(Permission, { foreignKey: 'userId', through: 'User_Permissions', as: 'users_permissions' });
       this.hasMany(Task, { foreignKey: 'assignTo', as: 'users_tasks' });
       this.hasMany(Comment, { foreignKey: 'userId', as: 'user_comments' });
+      this.hasMany(Message, { foreignKey: 'userId', as: 'user_messages' });
     }
   }
   User.init({
