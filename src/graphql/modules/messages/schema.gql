@@ -1,0 +1,15 @@
+type Message {
+  id: ID!
+  roomId: ID!
+  userId: ID!
+  body: String!
+  messages_user: User
+}
+
+type Query {
+  messagesPerRoom(roomId: ID!, workspaceId: ID!): [Message]!
+}
+
+type Mutation {
+  createMessage(roomId: ID!, body: String!, workspaceId: ID!): Message!
+}
