@@ -1,0 +1,12 @@
+type Room {
+  id: ID!
+  workspaceId: ID!
+}
+
+type Query {
+  room(workspaceId: ID): Room
+}
+
+type Mutation {
+  createRoom(workspaceId: ID): Boolean
+}

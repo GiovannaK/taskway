@@ -1,0 +1,1 @@
+exports.CREATE_MESSAGE = 'CREATE_MESSAGE';
