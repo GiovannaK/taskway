@@ -1,8 +1,12 @@
+/* eslint-disable arrow-body-style */
 const { ForbiddenError, ApolloError, UserInputError } = require('apollo-server-errors');
+const { withFilter } = require('apollo-server-express');
 const auth = require('../../../middlewares/auth');
 const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
 const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
-const { Message } = require('../../../models');
+const { Message, User } = require('../../../models');
+const { pubsub } = require('../../../modules/pubSub');
+const { CREATE_MESSAGE } = require('./channels');
 
 module.exports = {
   Query: {
@@ -63,10 +67,37 @@ module.exports = {
           throw new UserInputError('Cannot add message, verify please');
         }
 
+        const user = await User.findOne({
+          where: {
+            id: userId,
+          },
+          include: {
+            association: 'profile',
+          },
+        });
+
+        pubsub.publish(CREATE_MESSAGE, {
+          addMessage: {
+            message,
+            messages_user: user,
+            profile: user.profile,
+          },
+        });
+
         return message;
       } catch (error) {
         throw new ApolloError('Cannot create message in this workspace', { error });
       }
+    },
+  },
+  Subscription: {
+    addMessage: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(CREATE_MESSAGE),
+        (payload, variables) => {
+          return (payload.addMessage.message.roomId === variables.roomId);
+        },
+      ),
     },
   },
 };

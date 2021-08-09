@@ -13,3 +13,13 @@ type Query {
 type Mutation {
   createMessage(roomId: ID!, body: String!, workspaceId: ID!): Message!
 }
+
+type Subscription {
+  addMessage(roomId: ID!): MessageData!
+}
+
+type MessageData {
+  message: Message!
+  messages_user: User!
+  profile: Profile!
+}
