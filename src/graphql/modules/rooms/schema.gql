@@ -4,7 +4,7 @@ type Room {
 }
 
 type Query {
-  room(workspaceId: ID): Room
+  roomPerWorkspace(workspaceId: ID): Room
 }
 
 type Mutation {

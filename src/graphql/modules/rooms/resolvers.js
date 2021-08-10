@@ -1,11 +1,33 @@
 const { ForbiddenError, ApolloError, UserInputError } = require('apollo-server-errors');
 const auth = require('../../../middlewares/auth');
+const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
 const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
 const { Room } = require('../../../models');
 
 module.exports = {
   Query: {
+    roomPerWorkspace: async (_, { workspaceId }, context) => {
+      try {
+        auth(context);
+        const { userId } = context.req;
+        const owner = await isWorkspaceOwner(workspaceId, userId);
+        const workspaceMember = await isWorkspaceMember(workspaceId, userId);
 
+        if (!owner && !workspaceMember) {
+          throw new ForbiddenError('Not authorized to see room in this workspace');
+        }
+
+        const room = await Room.findOne({
+          where: {
+            workspaceId,
+          },
+        });
+
+        return room;
+      } catch (error) {
+        throw new ApolloError('Cannot show room for this workspace', { error });
+      }
+    },
   },
   Mutation: {
     createRoom: async (_, { workspaceId }, context) => {
