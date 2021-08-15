@@ -138,9 +138,8 @@ module.exports = {
         auth(context);
         const { userId } = context.req;
         const owner = await isWorkspaceOwner(workspaceId, userId);
-        const workspaceMember = await isWorkspaceMember(workspaceId, userId);
 
-        if (!owner && !workspaceMember) {
+        if (!owner) {
           throw new ForbiddenError('Not authorized to see tasks');
         }
 
@@ -160,6 +159,38 @@ module.exports = {
         return result;
       } catch (error) {
         throw new ApolloError('Cannot show tasks situation for this workspace', { error });
+      }
+    },
+    usersTaskSituation: async (_, { workspaceId, memberId }, context) => {
+      try {
+        auth(context);
+        const { userId } = context.req;
+        const owner = await isWorkspaceOwner(workspaceId, userId);
+
+        if (!owner) {
+          throw new ForbiddenError('Not authorized to see tasks');
+        }
+
+        if (memberId !== '' && memberId !== null && memberId !== undefined) {
+          const result = await Task.findAll({
+            where: {
+              assignTo: memberId,
+            },
+            attributes: [
+              'progress',
+              [Sequelize.fn('COUNT', Sequelize.col('progress')), 'count'],
+            ],
+            group: 'progress',
+            logging: true,
+            raw: true,
+          });
+
+          return result;
+        }
+
+        return [];
+      } catch (error) {
+        throw new ApolloError('Cannot show tasks situation per user for this workspace', { error });
       }
     },
     taskById: async (_, { workspaceId, id }, context) => {

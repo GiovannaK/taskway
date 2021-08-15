@@ -23,6 +23,7 @@ type Query {
     priority: String assignTo: ID!): [Task!]!
   taskById(workspaceId: ID!, id: ID!): Task!
   tasksSituation(workspaceId: ID!): [Task]
+  usersTaskSituation(workspaceId: ID!, memberId: ID!): [Task]
 }
 
 type Mutation {
