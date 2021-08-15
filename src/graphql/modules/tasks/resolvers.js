@@ -10,7 +10,7 @@ const checkPermission = require('../../../middlewares/checkPermission');
 const isWorkspaceMember = require('../../../middlewares/isWorkspaceMember');
 const isWorkspaceOwner = require('../../../middlewares/isWorkspaceOwner');
 const {
-  Task, Workspace, Permission,
+  Task, Workspace, Permission, Sequelize,
 } = require('../../../models');
 const { pubsub } = require('../../../modules/pubSub');
 const s3 = require('../../../modules/s3');
@@ -131,6 +131,35 @@ module.exports = {
         return tasks;
       } catch (error) {
         throw new ApolloError('Cannot show tasks for this workspace', { error });
+      }
+    },
+    tasksSituation: async (_, { workspaceId }, context) => {
+      try {
+        auth(context);
+        const { userId } = context.req;
+        const owner = await isWorkspaceOwner(workspaceId, userId);
+        const workspaceMember = await isWorkspaceMember(workspaceId, userId);
+
+        if (!owner && !workspaceMember) {
+          throw new ForbiddenError('Not authorized to see tasks');
+        }
+
+        const result = await Task.findAll({
+          where: {
+            workspaceId,
+          },
+          attributes: [
+            'progress',
+            [Sequelize.fn('COUNT', Sequelize.col('progress')), 'count'],
+          ],
+          group: 'progress',
+          logging: true,
+          raw: true,
+        });
+
+        return result;
+      } catch (error) {
+        throw new ApolloError('Cannot show tasks situation for this workspace', { error });
       }
     },
     taskById: async (_, { workspaceId, id }, context) => {

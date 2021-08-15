@@ -15,12 +15,14 @@ type Task {
   priority: String
   assignTo: ID!
   tasksUsers: User
+  count: Int
 }
 
 type Query {
   tasks(workspaceId: ID!,progress: String, maxDate: String,
     priority: String assignTo: ID!): [Task!]!
   taskById(workspaceId: ID!, id: ID!): Task!
+  tasksSituation(workspaceId: ID!): [Task]
 }
 
 type Mutation {

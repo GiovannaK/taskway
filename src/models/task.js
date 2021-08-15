@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.UUID,
     },
+    workspaceId: {
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
