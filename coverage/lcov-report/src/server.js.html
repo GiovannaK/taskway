@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.55% </span>
+                <span class="strong">82.22% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>38/49</span>
+                <span class='fraction'>37/45</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.55% </span>
+                <span class="strong">82.22% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>38/49</span>
+                <span class='fraction'>37/45</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -102,11 +102,7 @@
 <a name='L43'></a><a href='#L43'>43</a>
 <a name='L44'></a><a href='#L44'>44</a>
 <a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a>
-<a name='L47'></a><a href='#L47'>47</a>
-<a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L46'></a><a href='#L46'>46</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -149,66 +145,61 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const { ApolloServer, gql } = require('apollo-server-express');
-const {sequelize} = require('./models')
-const express = require('express')
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* eslint-disable import/no-extraneous-dependencies */
+const { ApolloServer } = require('apollo-server-express');
+const express = require('express');
+const { createServer } = require('http');
+const cookieParser = require('cookie-parser');
+const { sequelize } = require('./models');
 const typeDefs = require('./graphql/typeDefs');
-const resolvers = require('./graphql/resolvers')
-const cors = require('cors')
-const cookieParser = require('cookie-parser')
+const resolvers = require('./graphql/resolvers');
 &nbsp;
 require('dotenv').config({
-  path: <span class="branch-0 cbranch-no" title="branch not covered" >process.env.NODE_ENV === 'test' ? '.env.test' : '.env'</span>
-})
-&nbsp;
+  path: <span class="branch-0 cbranch-no" title="branch not covered" >process.env.NODE_ENV === 'test' ? '.env.test' : '.env',</span>
+});
 &nbsp;
 const app = express();
+const httpServer = createServer(app);
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({req, res, next}) =&gt; ({req, res, next}),
+  subscriptions: <span class="fstat-no" title="function not covered" >({</span> onConnect }) =&gt; ({ onConnect }),
+  context: ({ req, res, connection }) =&gt; ({
+    req, res, connection,
+  }),
 });
 &nbsp;
 const corsOptions = {
   credentials: true,
   origin: [`${process.env.CLIENT_URL}`, 'http://localhost:4000'],
-  methods: 'GET, POST, PUT, DELETE'
-}
+  methods: 'GET, POST, PUT, DELETE',
+};
 &nbsp;
-app.use(cookieParser())
-server.applyMiddleware({app, path: '/', cors: corsOptions,})
+app.use(cookieParser());
+server.applyMiddleware({ app, path: '/', cors: corsOptions });
+server.installSubscriptionHandlers(httpServer);
 &nbsp;
-app.use(cors({
-  credentials: true,
-  origin: [`${process.env.CLIENT_URL}`, 'http://localhost:4000'],
-}))
-&nbsp;
-&nbsp;
-if(process.env.NODE_ENV !== 'test')<span class="branch-0 cbranch-no" title="branch not covered" >{</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  app.listen({port: process.env.PORT || 4000}, () =&gt; {</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    console.log(`🚀 Server ready at ${ process.env.PORT}`);</span>
-<span class="cstat-no" title="statement not covered" >  })</span>
+if (process.env.NODE_ENV !== 'test') <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >  httpServer.listen({ port: process.env.PORT || 4000 }, () =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    console.log(`🚀 Server started at ${process.env.PORT}`);</span>
+<span class="cstat-no" title="statement not covered" >  });</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  sequelize.authenticate()</span>
-<span class="cstat-no" title="statement not covered" >  .then(() =&gt; console.log('Database connected!'))</span>
-<span class="cstat-no" title="statement not covered" >  .catch(err =&gt; console.log(err))</span>
-<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    .then(() =&gt; console.log('Database connected!'))</span>
+<span class="cstat-no" title="statement not covered" >    .catch((err) =&gt; console.log(err));</span>
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;
-module.exports = server;</pre></td></tr></table></pre>
+module.exports = server;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Fri Jun 18 2021 00:26:13 GMT-0300 (Horário Padrão de Brasília)
+                at Sun Aug 15 2021 00:56:04 GMT-0300 (Horário Padrão de Brasília)
             </div>
         </div>
         <script src="../prettify.js"></script>

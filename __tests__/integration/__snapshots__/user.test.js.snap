@@ -1,26 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Authentication flux Should authenticate user with valid credentials 1`] = `
-Object {
-  "data": null,
-  "errors": Array [
-    [GraphQLError: Cannot read property 'cookie' of undefined],
-  ],
-  "extensions": undefined,
-  "http": Object {
-    "headers": Headers {
-      Symbol(map): Object {},
-    },
-  },
-}
-`;
-
 exports[`Authentication flux Should confirm user account 1`] = `
 Object {
   "data": Object {
     "userConfirmAccount": Object {
       "email": "teste@email.com",
-      "id": "dcd1ae74-083c-454e-baac-c5219245f044",
+      "id": "2edc3d54-bd4f-4016-95da-d5d41a586dc2",
       "isVerified": true,
     },
   },
@@ -38,8 +23,8 @@ exports[`Authentication flux Should generate reset token 1`] = `
 Object {
   "data": Object {
     "userForgotPassword": Object {
-      "id": "11d7fb99-45b8-49e6-90f5-12b14cc5fd17",
-      "passwordResetToken": "1e2493cec16f39eed105b823ec300f079b8be15d",
+      "id": "768d37d9-fecb-4917-ae0a-91ae0aff4398",
+      "passwordResetToken": "27411de4fcb08ac806700b40d560be9be0921343",
     },
   },
   "errors": undefined,
@@ -57,9 +42,9 @@ Object {
   "data": Object {
     "userRegister": Object {
       "email": "kowesor320@vvaa1.com",
-      "emailConfirmationToken": "cd9dc6a45f6aa3025e90b783c5ada1de790e979b",
+      "emailConfirmationToken": "e10b21d4b85df2438d9b567893114394534d6d75",
       "firstName": "mytest",
-      "id": "ad946997-7d40-467e-ba84-5e3814300e1a",
+      "id": "43c1e0a1-13e7-40a8-bf89-cb0d67f9cab2",
       "lastName": "lastnametest",
     },
   },
@@ -78,36 +63,8 @@ Object {
   "data": Object {
     "userResetPassword": Object {
       "email": "teste@email.com",
-      "id": "b1259c0b-adfc-48df-a93b-7cd8ce495009",
+      "id": "8017f7e4-e1c4-4038-bd06-cc6fab387abf",
     },
-  },
-  "errors": undefined,
-  "extensions": undefined,
-  "http": Object {
-    "headers": Headers {
-      Symbol(map): Object {},
-    },
-  },
-}
-`;
-
-exports[`Query users Should return multiple users 1`] = `
-Object {
-  "data": Object {
-    "users": Array [
-      Object {
-        "email": "teste@email.com",
-        "firstName": "teste1",
-        "id": "8db80917-046c-4a8a-a71a-2d62134c503b",
-        "lastName": "teste last",
-      },
-      Object {
-        "email": "teste2@email.com",
-        "firstName": "teste2",
-        "id": "d016c027-5f99-4005-a1a8-1c1883aa44be",
-        "lastName": "teste2 last",
-      },
-    ],
   },
   "errors": undefined,
   "extensions": undefined,

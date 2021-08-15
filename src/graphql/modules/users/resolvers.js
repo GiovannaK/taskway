@@ -119,15 +119,6 @@ module.exports = {
         const token = jwt.sign({ userId: user.id }, process.env.TOKEN_SECRET, {
           expiresIn: process.env.TOKEN_EXPIRATION,
         });
-
-        const isSecure = () => {
-          if (process.env.COOKIE_SECURE === true) {
-            return 'none';
-          }
-        };
-
-        console.log(isSecure());
-
         res.cookie('id', token, {
           httpOnly: true,
           maxAge: 1000 * 60 * 60 * 24 * 7,
@@ -145,7 +136,6 @@ module.exports = {
 
         return data;
       } catch (error) {
-        console.log(error);
         throw new AuthenticationError('Somenthing went wrong, cannot authenticate user', { error });
       }
     },
@@ -169,7 +159,7 @@ module.exports = {
         const userAlreadyExists = await User.findOne({ where: { email } });
 
         if (userAlreadyExists) {
-          throw new UserInputError('Usuário já existe');
+          throw new UserInputError('User already exists');
         }
 
         if (password.length < 8) {
