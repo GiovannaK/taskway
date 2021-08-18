@@ -171,24 +171,20 @@ module.exports = {
           throw new ForbiddenError('Not authorized to see tasks');
         }
 
-        if (memberId !== '' && memberId !== null && memberId !== undefined) {
-          const result = await Task.findAll({
-            where: {
-              assignTo: memberId,
-            },
-            attributes: [
-              'progress',
-              [Sequelize.fn('COUNT', Sequelize.col('progress')), 'count'],
-            ],
-            group: 'progress',
-            logging: true,
-            raw: true,
-          });
+        const result = await Task.findAll({
+          where: {
+            assignTo: memberId,
+          },
+          attributes: [
+            'progress',
+            [Sequelize.fn('COUNT', Sequelize.col('progress')), 'count'],
+          ],
+          group: 'progress',
+          logging: true,
+          raw: true,
+        });
 
-          return result;
-        }
-
-        return [];
+        return result;
       } catch (error) {
         throw new ApolloError('Cannot show tasks situation per user for this workspace', { error });
       }
