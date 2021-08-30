@@ -4,8 +4,8 @@
 ## See API docs here: https://taskwayservice.herokuapp.com/
 
 ### Demo Credentials
-- E-MAIL: 
-- PASSWORD: 
+- E-MAIL: Soon
+- PASSWORD: Soon
 ---
 
 <p align="center">
@@ -75,7 +75,7 @@ https://aws.amazon.com/pt/
 
 - Only users who have the create task permission, can create new tasks.
 
-- Tasks have the following fields: 
+- Tasks have the following fields:
 
 - Title
 - Description
@@ -130,7 +130,7 @@ git clone https://github.com/GiovannaK/taskway.git
 ```html
 npm install
 ```
-### Creating Environment variables. 
+### Creating Environment variables.
 
 - create a .env file in the root folder
 
@@ -161,10 +161,10 @@ AWS_DEFAULT_REGION = BUCKET REGION
 AWS_SECRET_ACCESS_KEY = AWS SECRET
 
 REDIS_HOST = REDIS HOST FOR SUBSCRIPTIONS
-REDIS_PORT = REDIS PORT 
+REDIS_PORT = REDIS PORT
 
 CLIENT_URL = CLIENT URL, YOU CAN GET HERE
-https://github.com/GiovannaK/taskway-client.git 
+https://github.com/GiovannaK/taskway-client.git
 
 COOKIE_SECURE = DEFINE TO FALSE IF YOU ARE IN LOCALHOST
 
@@ -207,7 +207,7 @@ AWS_SECRET_ACCESS_KEY = AWS SECRET
 
 ```html
   src/config/config.js
-  
+
   add a comment to this snippet
 
 /*   dialectOptions: {
@@ -216,7 +216,7 @@ AWS_SECRET_ACCESS_KEY = AWS SECRET
       rejectUnauthorized: false,
     },
   }, */
-  
+
 ```
 
 ### Docker
