@@ -2,6 +2,8 @@ version: "3"
 services:
   redis:
     image: redis
+    ports:
+      - ${REDIS_PORT}
   db:
     image: postgres
     container_name: db
@@ -18,12 +20,12 @@ services:
     build: .
     ports:
       - ${PORT}:4000
-    command: npm run dev
+    command: npm start
     volumes:
       - .:/usr/app
     environment:
       DB_HOST: db
-      REDIS_HOST: redis
+      REDIS_HOST: ${REDIS_HOST}
     depends_on:
       - db
       - redis
