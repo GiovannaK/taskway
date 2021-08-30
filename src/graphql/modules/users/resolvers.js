@@ -144,8 +144,20 @@ module.exports = {
       try {
         auth(context);
 
-        context.res.clearCookie('id');
-        context.res.clearCookie('logged');
+        context.res.cookie('id', '', {
+          httpOnly: true,
+          maxAge: 0,
+          secure: process.env.COOKIE_SECURE,
+          sameSite: 'none',
+          overwrite: true,
+        });
+
+        context.res.cookie('logged', '', {
+          maxAge: 0,
+          secure: process.env.COOKIE_SECURE,
+          sameSite: 'none',
+          overwrite: true,
+        });
 
         return true;
       } catch (error) {
