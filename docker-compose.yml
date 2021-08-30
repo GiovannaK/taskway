@@ -20,7 +20,7 @@ services:
     build: .
     ports:
       - ${PORT}:4000
-    command: npm start
+    command: npm run dev
     volumes:
       - .:/usr/app
     environment:
