@@ -2,6 +2,7 @@
 
 ## See preview here: https://taskway-client.vercel.app/
 ## See API docs here: https://taskwayservice.herokuapp.com/
+## Client Repository: https://github.com/GiovannaK/taskway-client
 
 ### Demo Credentials
 - E-MAIL: Soon
