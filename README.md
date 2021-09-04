@@ -5,8 +5,8 @@
 ## Client Repository: https://github.com/GiovannaK/taskway-client
 
 ### Demo Credentials
-- E-MAIL: Soon
-- PASSWORD: Soon
+- E-MAIL: demo@cloud-mail.top
+- PASSWORD: taskway1
 ---
 
 <p align="center">
